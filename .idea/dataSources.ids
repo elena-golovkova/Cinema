@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="dataSourceStorage">
+  <data-source name="MySQL - cinema_db@localhost" uuid="826dff1b-c7d9-4fde-b15b-f25112d0c21c">
+    <database-info product="MySQL" version="5.7.11-log" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.35 ( Revision: 5fb9c5849535c13917c2cf9baaece6ef9693ef27 )">
+      <extra-name-characters>#@</extra-name-characters>
+      <identifier-quote-string>`</identifier-quote-string>
+    </database-info>
+    <case-sensitivity plain-identifiers="lower" quoted-identifiers="lower"/>
+    <schema name="" catalog="cinema_db"/>
+    <table name="hall" schema="" catalog="cinema_db" type="TABLE">
+      <column name="id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="100" scale="0" nullable="true" jdbcType="12"/>
+      <column name="row_count" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="column_count" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="fk_session_1" table="session" schema="" catalog="cinema_db" columns="hall_id"/>
+      <index name="id" unique="true" columns="id"/>
+    </table>
+    <table name="movie" schema="" catalog="cinema_db" type="TABLE">
+      <column name="id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="title" sqlType="VARCHAR" precision="100" scale="0" nullable="true" jdbcType="12"/>
+      <column name="description" sqlType="VARCHAR" precision="1000" scale="0" nullable="true" jdbcType="12"/>
+      <column name="duration" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="fk_session_2" table="session" schema="" catalog="cinema_db" columns="movie_id"/>
+      <index name="id" unique="true" columns="id"/>
+    </table>
+    <table name="session" schema="" catalog="cinema_db" type="TABLE">
+      <column name="id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="date" sqlType="DATE" precision="10" scale="0" nullable="true" jdbcType="91"/>
+      <column name="hall_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="movie_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="fk_session_1" columns="hall_id" ref-table="hall" ref-schema="" ref-catalog="cinema_db" ref-columns="id" update-rule="0" delete-rule="2" deferrability="2"/>
+      <foreign-key name="fk_session_2" columns="movie_id" ref-table="movie" ref-schema="" ref-catalog="cinema_db" ref-columns="id" update-rule="0" delete-rule="2" deferrability="2"/>
+      <exported-key name="fk_ticket_1" table="ticket" schema="" catalog="cinema_db" columns="session_id"/>
+      <index name="id" unique="true" columns="id"/>
+      <index name="fk_session_1" unique="false" columns="hall_id"/>
+      <index name="fk_session_2" unique="false" columns="movie_id"/>
+    </table>
+    <table name="ticket" schema="" catalog="cinema_db" type="TABLE">
+      <column name="id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="row" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="column" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="session_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="fk_ticket_1" columns="session_id" ref-table="session" ref-schema="" ref-catalog="cinema_db" ref-columns="id" update-rule="0" delete-rule="2" deferrability="2"/>
+      <index name="id" unique="true" columns="id"/>
+      <index name="fk_ticket_1" unique="false" columns="session_id"/>
+    </table>
+    <table name="user" schema="" catalog="cinema_db" type="TABLE">
+      <column name="id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="first_name" sqlType="VARCHAR" precision="100" scale="0" nullable="true" jdbcType="12"/>
+      <column name="last_name" sqlType="VARCHAR" precision="100" scale="0" nullable="true" jdbcType="12"/>
+      <column name="email" sqlType="VARCHAR" precision="100" scale="0" nullable="true" jdbcType="12"/>
+      <column name="login" sqlType="VARCHAR" precision="100" scale="0" nullable="true" jdbcType="12"/>
+      <column name="password" sqlType="VARCHAR" precision="100" scale="0" nullable="true" jdbcType="12"/>
+      <column name="date" sqlType="DATE" precision="10" scale="0" nullable="true" jdbcType="91"/>
+      <column name="role" sqlType="ENUM" precision="6" scale="0" nullable="true" jdbcType="1"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="id" unique="true" columns="id"/>
+    </table>
+  </data-source>
+</component>
