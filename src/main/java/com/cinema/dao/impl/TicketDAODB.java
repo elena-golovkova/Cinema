@@ -17,7 +17,9 @@ import java.util.List;
 public class TicketDAODB extends CrudDAODataBase<Ticket, Integer> implements TicketDAO<Ticket, Integer> {
     private static TicketDAODB ticketDAO;
     private static final String SELECT_ALL_SOLD_TICKET = "select * from session \n" +
-            "join ticket on session.id = ticket.session_id where session.id = ?;";
+            "join ticket on session.id = ticket.session_id where session.id = ?";
+    private static final String PURCHASE = "Insert into ticket (row, place, session_id) values (?,?,?)";
+    private static final String RETURN = "Delete from ticket where id = ?";
 
     public synchronized static TicketDAODB getInstance() {
 
@@ -31,16 +33,38 @@ public class TicketDAODB extends CrudDAODataBase<Ticket, Integer> implements Tic
         super(type);
     }
 
-    //// TODO: 10.04.2016
     @Override
-    public Ticket purchaseTicket(int row, int column, int sessionId) {
-        return null;
+    public void purchaseTicket(int row, int column, int sessionId) {
+
+        Connection connection = instance.getConnection();
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = connection.prepareStatement(PURCHASE);
+            preparedStatement.setInt(1, row);
+            preparedStatement.setInt(2, column);
+            preparedStatement.setInt(3, sessionId);
+            preparedStatement.executeUpdate();
+            }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 
-    // // TODO: 10.04.2016
     @Override
-    public Ticket returnTicket(int row, int column, int sessionId) {
-        return null;
+    public void returnTicket(Integer id) {
+
+        Connection connection = instance.getConnection();
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = connection.prepareStatement(RETURN);
+            preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override

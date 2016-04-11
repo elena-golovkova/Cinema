@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface TicketService extends Service<TicketDTO, Integer> {
 
-    TicketDTO purchaseTicket(int row, int column, int sessionId);
-    TicketDTO returnTicket(int row, int column, int sessionId);
+    void purchaseTicket(int row, int column, int sessionId);
+    void returnTicket(int id);
     public List<TicketDTO> getAllSoldTicketFromSession(Integer id);
 }

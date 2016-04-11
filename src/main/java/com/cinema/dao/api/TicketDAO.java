@@ -6,8 +6,8 @@ import java.util.List;
 
 public interface TicketDAO<Ticket, Integer> extends Dao<Ticket, Integer> {
 
-    Ticket purchaseTicket(int row, int column, int sessionId);
-    Ticket returnTicket(int row, int column, int sessionId);
+    void purchaseTicket(int row, int column, int sessionId);
+    void returnTicket(Integer id);
     public List<Ticket> getAllSoldTicketFromSession(Integer id);
 
 }

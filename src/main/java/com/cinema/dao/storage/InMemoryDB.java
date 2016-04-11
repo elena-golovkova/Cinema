@@ -284,17 +284,28 @@ public class InMemoryDB<T, K> {
         throw new RuntimeException("Ticket is already sold out");
     }
 
-    public Ticket returnTicket(int row, int column, int sessionId) {
-        Ticket ticket = findTicketBySessionId(row, column, sessionId);
+    public void returnTicket(Integer id) {
+        Ticket ticket = findTicketById(id);
         if (ticket != null) {
-            Session session = getSessionById(sessionId);
-            List<Ticket> tickets = session.getTickets();
             synchronized (tickets) {
                 tickets.remove(ticket);
             }
-            return ticket;
+
         } else throw new RuntimeException("This ticket wasn't sold out");
     }
+
+    private Ticket findTicketById(Integer id) {
+        if (tickets == null) throw new NoSuchElementException("List is empty");
+        if (id < 1 & id > ticketIdsCounter) throw new NoSuchElementException("There is no such id");
+        for (Ticket ticket : tickets) {
+            if (ticket.getId().equals(id)) {
+                return ticket;
+            }
+        }
+        throw new NoSuchElementException("There is no such id");
+    }
+
+
 
     private Ticket findTicketBySessionId(int row, int column, int sessionId) {
         Session session = getSessionById(sessionId);

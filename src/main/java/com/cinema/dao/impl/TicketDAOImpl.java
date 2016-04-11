@@ -23,15 +23,15 @@ public final class TicketDAOImpl extends AbstractDAOInMemory<Ticket, Integer> im
     }
 
     @Override
-    public Ticket purchaseTicket(int row, int column, int sessionId) {
+    public void purchaseTicket(int row, int column, int sessionId) {
         InMemoryDB instance = InMemoryDB.getInstance();
-        return instance.purchaseTicket(row, column, sessionId);
+        instance.purchaseTicket(row, column, sessionId);
     }
 
     @Override
-    public Ticket returnTicket(int row, int column, int sessionId) {
+    public void returnTicket(Integer id) {
         InMemoryDB instance = InMemoryDB.getInstance();
-        return instance.returnTicket(row, column, sessionId);
+        instance.returnTicket(id);
     }
 
     @Override

@@ -1,9 +1,7 @@
 package com.cinema.web;
 
 
-import com.cinema.Transformer;
 import com.cinema.dto.*;
-import com.cinema.model.*;
 import com.cinema.service.api.*;
 import com.cinema.service.impl.*;
 
@@ -74,12 +72,17 @@ public class Main {
         session.setMovie(movie);
         session.setId(1);
 
-        SessionService sessionService = SessionServiceImpl.getInstance();
-        //sessionService.create(session);
-        System.out.println(sessionService.getALLSessionWithAllData());*/
-        TicketService ticketService = TicketServiceImpl.getInstance();
-        System.out.println(ticketService.getAllSoldTicketFromSession(1));
 
+        //sessionService.create(session);
+        System.out.println(sessionService.getALLSessionsWithAllData());*/
+        TicketService ticketService = TicketServiceImpl.getInstance();
+        SessionService sessionService = SessionServiceImpl.getInstance();
+
+        System.out.println(sessionService.getAll());
+        System.out.println(ticketService.getAllSoldTicketFromSession(1));
+        System.out.println(sessionService.getALLSessionsWithAllData());
+        ticketService.purchaseTicket(2,4,1);
+        ticketService.returnTicket(3);
 
     }
 

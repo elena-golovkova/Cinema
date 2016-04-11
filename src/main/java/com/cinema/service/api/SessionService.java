@@ -8,6 +8,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface SessionService extends Service<SessionDTO, Integer> {
-    public List<SessionDTO> getALLSessionWithAllData();
+    public List<SessionDTO> getALLSessionsWithAllData();
 
 }

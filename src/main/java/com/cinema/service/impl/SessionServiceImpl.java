@@ -97,7 +97,7 @@ public final class SessionServiceImpl implements SessionService {
         }
     }
 
-    public List<SessionDTO> getALLSessionWithAllData() {
+    public List<SessionDTO> getALLSessionsWithAllData() {
         List<SessionDTO> sessionDTOs = null;
         if (isDB) {
             SessionDAO sessionDAO = SessionDAODB.getInstance();

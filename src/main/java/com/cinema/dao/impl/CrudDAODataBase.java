@@ -291,7 +291,7 @@ public abstract class CrudDAODataBase<T, Integer> implements Dao<T, Integer> {
         return result;
     }
 
-    private Movie findMovieByIdInDB(Integer id) throws SQLException {
+   /* private Movie findMovieByIdInDB(Integer id) throws SQLException {
         Movie movie = null;
         Connection connection = instance.getConnection();
         String sql = String.format("Select * from movie where id = ?");
@@ -316,25 +316,13 @@ public abstract class CrudDAODataBase<T, Integer> implements Dao<T, Integer> {
             hall = createHall(resultSet);
         }
         return hall;
-    }
+    }*/
 
     private Session createSession(ResultSet resultSet) throws SQLException {
         Session session = new Session();
         LocalDateTime ld = converterLocalDateToTimestamp.convertToEntityAttribute(resultSet.getTimestamp("date"));
-        java.lang.Integer idHall = resultSet.getInt("hall_id");
-        java.lang.Integer idMovie = resultSet.getInt("movie_id");
-
         session.setId(resultSet.getInt("id"));
         session.setDate(ld);
-        if (idMovie != null) {
-            Movie movie = findMovieByIdInDB((Integer) idMovie);
-            session.setMovie(movie);
-        }
-        if (idHall != null) {
-            Hall hall = findHallByIdInDB((Integer) idMovie);
-            session.setHall(hall);
-        }
-
         return session;
     }
 
