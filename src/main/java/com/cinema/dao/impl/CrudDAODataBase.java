@@ -2,11 +2,13 @@ package com.cinema.dao.impl;
 
 import com.cinema.dao.api.Dao;
 import com.cinema.dao.storage.LocalDatePersistenceConverter;
+import com.cinema.dao.storage.LocalDateTimePersistenceConverter;
 import com.cinema.datasource.DataSource;
 import com.cinema.model.*;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -24,8 +26,9 @@ public abstract class CrudDAODataBase<T, Integer> implements Dao<T, Integer> {
     public static final String TICKET = "ticket";
     public static final String SESSION = "session";
     private static Map<Object, String> stringMap = new HashMap<>();
-    DataSource instance = DataSource.getInstance();
+    protected DataSource instance = DataSource.getInstance();
     LocalDatePersistenceConverter converter = new LocalDatePersistenceConverter();
+    LocalDateTimePersistenceConverter converterLocalDateToTimestamp = new LocalDateTimePersistenceConverter();
 
     private final String SELECT_ALL = "Select * from %s";
     private final String FIND_BY_ID = "Select * from %s where id = ?";
@@ -181,12 +184,12 @@ public abstract class CrudDAODataBase<T, Integer> implements Dao<T, Integer> {
                 break;
             case SESSION:
                 Session session = (Session) entity;
-                Date dateSession = converter.convertToDatabaseColumn(session.getDate());
+                Timestamp dateSession = converterLocalDateToTimestamp.convertToDatabaseColumn(session.getDate());
                 java.lang.Integer movieId = session.getMovie() == null ? null : session.getMovie().getId();
                 java.lang.Integer hallId = session.getHall() == null ? null : session.getHall().getId();
                 sql = String.format(INSERT, stringMap.get(type), " (date, hall_id, movie_id) values (?,?,?)");
                 preparedStatement = connection.prepareStatement(sql);
-                preparedStatement.setDate(1, dateSession);
+                preparedStatement.setTimestamp(1, dateSession);
                 preparedStatement.setInt(2, hallId);
                 preparedStatement.setInt(3, movieId);
                 break;
@@ -242,13 +245,13 @@ public abstract class CrudDAODataBase<T, Integer> implements Dao<T, Integer> {
                 break;
             case SESSION:
                 Session session = (Session) entity;
-                Date dateSession = converter.convertToDatabaseColumn(session.getDate());
+                Timestamp dateSession = converterLocalDateToTimestamp.convertToDatabaseColumn(session.getDate());
                 java.lang.Integer movieId = session.getMovie() == null ? null : session.getMovie().getId();
                 java.lang.Integer hallId = session.getHall() == null ? null : session.getHall().getId();
 
                 sql = String.format(UPDATE, stringMap.get(type), " date = ?, hall_id = ?, movie_id = ? where id = ?");
                 preparedStatement = connection.prepareStatement(sql);
-                preparedStatement.setDate(1, dateSession);
+                preparedStatement.setTimestamp(1, dateSession);
                 preparedStatement.setInt(2, hallId);
                 preparedStatement.setInt(3, movieId);
                 preparedStatement.setInt(4, session.getId());
@@ -317,7 +320,7 @@ public abstract class CrudDAODataBase<T, Integer> implements Dao<T, Integer> {
 
     private Session createSession(ResultSet resultSet) throws SQLException {
         Session session = new Session();
-        LocalDate ld = converter.convertToEntityAttribute(resultSet.getDate("date"));
+        LocalDateTime ld = converterLocalDateToTimestamp.convertToEntityAttribute(resultSet.getTimestamp("date"));
         java.lang.Integer idHall = resultSet.getInt("hall_id");
         java.lang.Integer idMovie = resultSet.getInt("movie_id");
 
@@ -355,7 +358,6 @@ public abstract class CrudDAODataBase<T, Integer> implements Dao<T, Integer> {
     private User createUser(ResultSet resultSet) throws SQLException {
         LocalDate ld = converter.convertToEntityAttribute(resultSet.getDate("date"));
         Role role = Role.valueOf(resultSet.getString("role"));
-
         User user = new User();
         user.setId(resultSet.getInt("id"));
         user.setFirstName(resultSet.getString("first_name"));

@@ -1,13 +1,14 @@
 package com.cinema.model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
 public class Session {
     private Integer id;
-    private LocalDate date;
+    private LocalDateTime date;
     private Hall hall;
     private Movie movie;
     private List<Ticket> tickets = new LinkedList<>();
@@ -20,16 +21,16 @@ public class Session {
         this.id = id;
     }
 
-    public LocalDate getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 
-    public void setDate(int year, int month, int day) {
-        this.date = LocalDate.of(year, month, day);
+    public void setDate(int year, int month, int day, int hour, int minute) {
+        this.date = LocalDateTime.of(year, month, day, hour, minute);
     }
 
     public Hall getHall() {
@@ -57,7 +58,7 @@ public class Session {
         this.tickets = tickets;
     }
 
-    public Session(Integer id, LocalDate date, Hall hall, Movie movie, List<Ticket> tickets) {
+    public Session(Integer id, LocalDateTime date, Hall hall, Movie movie, List<Ticket> tickets) {
         setId(id);
         setDate(date);
         setHall(hall);
@@ -65,9 +66,9 @@ public class Session {
         setTickets(tickets);
     }
 
-    public Session(Integer id, int year, int month, int day, Hall hall, Movie movie, List<Ticket> tickets) {
+    public Session(Integer id, int year, int month, int day, int hour, int minute,  Hall hall, Movie movie, List<Ticket> tickets) {
         setId(id);
-        setDate(year, month, day);
+        setDate(year, month, day, hour, minute);
         setHall(hall);
         setMovie(movie);
         setTickets(tickets);

@@ -1,10 +1,12 @@
 package com.cinema.web;
 
 import com.cinema.dao.storage.LocalDatePersistenceConverter;
+import com.cinema.dao.storage.LocalDateTimePersistenceConverter;
 
 import java.beans.PropertyVetoException;
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class TestClass {
     public static void main(String[] args) throws PropertyVetoException, SQLException {
@@ -30,10 +32,12 @@ public class TestClass {
         }
         conn.close();
     }*/
-        LocalDate lc = LocalDate.of(2002, 05, 29);
-        LocalDatePersistenceConverter converter = new LocalDatePersistenceConverter();
-        Date date = converter.convertToDatabaseColumn(lc);
-        System.out.println(date);
+        LocalDateTimePersistenceConverter converter = new LocalDateTimePersistenceConverter();
+        LocalDateTime lc = LocalDateTime.of(2002, 05, 29, 14,50);
+        Timestamp ts = converter.convertToDatabaseColumn(lc);
+        System.out.println(lc);
+        System.out.println(ts);
+
     }
 
 }

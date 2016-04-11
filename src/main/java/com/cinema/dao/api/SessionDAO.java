@@ -5,10 +5,9 @@ import com.cinema.model.Session;
 import com.cinema.model.User;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
-public interface SessionDAO<Session, Integer> extends Dao<Session, Integer>{
-
-    void createSession(int movieId, int hallId, LocalDate date);
-
+public interface SessionDAO<Session, Integer> extends Dao<Session, Integer> {
+    public List<Session> getALLSessionWithAllData();
 }

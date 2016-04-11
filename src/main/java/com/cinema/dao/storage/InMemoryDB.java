@@ -5,6 +5,7 @@ import com.cinema.exception.UserLoginException;
 import com.cinema.model.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -307,7 +308,7 @@ public class InMemoryDB<T, K> {
         return null;
     }
 
-    public Session createSession(int movieId, int hallId, LocalDate date) {
+    public Session createSession(int movieId, int hallId, LocalDateTime date) {
         Hall hall = getHallById(hallId);
         Movie movie = getMovieById(movieId);
 

@@ -58,26 +58,28 @@ public class Main {
             //ticketService.create(ticketDTO);
         }
         ticketService.delete(1);
-        System.out.println(ticketService.getAll());*/
-        /*
+        System.out.println(ticketService.getAll());
+        HallService hallService = HallServiceImpl.getInstance();
         HallDTO hallDTO = new HallDTO();
         hallDTO.setName("blue");
         hallDTO.setColumnCount(10);
         hallDTO.setRowCount(10);
-        hallService.create(hallDTO);*/
-        HallService hallService = HallServiceImpl.getInstance();
-        Hall hall = Transformer.hallDtoToHall(hallService.get(3));
-        MovieService movieService = MovieServiceImpl.getInstance();
-        Movie movie = Transformer.movieDTOTMovie(movieService.get(3));
+        hallService.create(hallDTO);
+
+        Hall hall = Transformer.hallDtoToHall(hallDTO);
+        Movie movie = new Movie();
         SessionDTO session = new SessionDTO();
-        session.setDate(2025, 01, 01);
+        session.setDate(2025, 01, 01, 17, 06);
         session.setHall(hall);
         session.setMovie(movie);
         session.setId(1);
+
         SessionService sessionService = SessionServiceImpl.getInstance();
-        System.out.println(sessionService.get(1));
-        sessionService.update(session);
-        System.out.println(sessionService.get(1));
+        //sessionService.create(session);
+        System.out.println(sessionService.getALLSessionWithAllData());*/
+        TicketService ticketService = TicketServiceImpl.getInstance();
+        System.out.println(ticketService.getAllSoldTicketFromSession(1));
+
 
     }
 

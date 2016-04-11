@@ -4,6 +4,8 @@ import com.cinema.dao.api.TicketDAO;
 import com.cinema.dao.storage.InMemoryDB;
 import com.cinema.model.Ticket;
 
+import java.util.List;
+
 public final class TicketDAOImpl extends AbstractDAOInMemory<Ticket, Integer> implements TicketDAO<Ticket, Integer> {
     private static TicketDAOImpl ticketDAO;
 
@@ -30,6 +32,12 @@ public final class TicketDAOImpl extends AbstractDAOInMemory<Ticket, Integer> im
     public Ticket returnTicket(int row, int column, int sessionId) {
         InMemoryDB instance = InMemoryDB.getInstance();
         return instance.returnTicket(row, column, sessionId);
+    }
+
+    @Override
+    public List<Ticket> getAllSoldTicketFromSession(Integer id) {
+        //for DB
+        return null;
     }
 
 

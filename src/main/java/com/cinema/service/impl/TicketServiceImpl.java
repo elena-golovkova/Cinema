@@ -57,6 +57,17 @@ public final class TicketServiceImpl implements TicketService {
     }
 
     @Override
+    public List<TicketDTO> getAllSoldTicketFromSession(Integer id) {
+        List<TicketDTO> ticketDTOs = new LinkedList<>();
+        if (isDB) {
+            TicketDAO ticketDAO = TicketDAODB.getInstance();
+            List<Ticket> tickets = ticketDAO.getAllSoldTicketFromSession(id);
+            ticketDTOs = Transformer.listSeatsToListSeatsDTO(tickets);
+        }
+        return ticketDTOs;
+    }
+
+    @Override
     public List<TicketDTO> getAll() {
         List<TicketDTO> ticketDTOs = new LinkedList<>();
         if (!isDB) {
