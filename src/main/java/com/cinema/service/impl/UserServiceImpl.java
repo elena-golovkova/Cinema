@@ -7,6 +7,7 @@ import com.cinema.dao.impl.UserDAOImpl;
 import com.cinema.dao.storage.Configuration;
 import com.cinema.dto.UserDTO;
 import com.cinema.exception.UserException;
+import com.cinema.exception.UserLoginException;
 import com.cinema.model.User;
 import com.cinema.service.api.UserService;
 
@@ -33,21 +34,11 @@ public final class UserServiceImpl implements UserService {
         UserDTO userDTO = null;
         if (!isBD) {
             UserDAO userDAO = UserDAOImpl.getInstance();
-            User user = null;
-            try {
-                user = (User) userDAO.findUser(login, password);
-            } catch (UserException e) {
-                e.printStackTrace();
-            }
+            User user  = (User) userDAO.findUser(login, password);
             userDTO = Transformer.userToUserDto(user);
-        }else {
+        } else {
             UserDAO userDAO = UserDAODB.getInstance();
-            User user = null;
-            try {
-                user = (User) userDAO.findUser(login, password);
-            } catch (UserException e) {
-                e.printStackTrace();
-            }
+            User user = (User) userDAO.findUser(login, password);
             userDTO = Transformer.userToUserDto(user);
         }
         return userDTO;
@@ -61,7 +52,7 @@ public final class UserServiceImpl implements UserService {
             List<User> users = userDAO.getAll();
             usersDTO = Transformer.listUserToListUserDTO(users);
 
-        }else {
+        } else {
             UserDAO userDAO = UserDAODB.getInstance();
             List<User> users = userDAO.getAll();
             usersDTO = Transformer.listUserToListUserDTO(users);
@@ -75,7 +66,7 @@ public final class UserServiceImpl implements UserService {
             UserDAO userDAO = UserDAOImpl.getInstance();
             User user = Transformer.userDTOToUser(userDTO);
             userDAO.create(user);
-        }else{
+        } else {
             UserDAO userDAO = UserDAODB.getInstance();
             User user = Transformer.userDTOToUser(userDTO);
             userDAO.create(user);
@@ -90,7 +81,7 @@ public final class UserServiceImpl implements UserService {
             User user = (User) userDAO.get(id);
             userDTO = Transformer.userToUserDto(user);
 
-        }else {
+        } else {
             UserDAO userDAO = UserDAODB.getInstance();
             User user = (User) userDAO.get(id);
             userDTO = Transformer.userToUserDto(user);
@@ -105,7 +96,7 @@ public final class UserServiceImpl implements UserService {
             UserDAO userDAO = UserDAOImpl.getInstance();
             User user = (User) userDAO.update(Transformer.userDTOToUser(userDTO));
             userDTONew = Transformer.userToUserDto(user);
-        }else{
+        } else {
             UserDAO userDAO = UserDAODB.getInstance();
             User user = (User) userDAO.update(Transformer.userDTOToUser(userDTO));
             userDTONew = Transformer.userToUserDto(user);
@@ -118,7 +109,7 @@ public final class UserServiceImpl implements UserService {
         if (!isBD) {
             UserDAO userDAO = UserDAOImpl.getInstance();
             userDAO.delete(id);
-        }else {
+        } else {
             UserDAO userDAO = UserDAODB.getInstance();
             userDAO.delete(id);
         }

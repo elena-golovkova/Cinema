@@ -30,10 +30,10 @@ public final class TicketServiceImpl implements TicketService {
     public void purchaseTicket(int row, int column, int sessionId) {
 
         if (!isDB) {
-            TicketDAO ticketDAO = TicketDAOImpl.getInstance();
+            TicketDAO<Ticket, Integer> ticketDAO = TicketDAOImpl.getInstance();
             ticketDAO.purchaseTicket(row, column, sessionId);
         } else {
-            TicketDAO ticketDAO = TicketDAODB.getInstance();
+            TicketDAO<Ticket, Integer> ticketDAO = TicketDAODB.getInstance();
             ticketDAO.purchaseTicket(row, column, sessionId);
         }
 
@@ -43,11 +43,11 @@ public final class TicketServiceImpl implements TicketService {
     public void returnTicket(int id) {
 
         if (!isDB) {
-            TicketDAO ticketDAO = TicketDAOImpl.getInstance();
+            TicketDAO<Ticket, Integer> ticketDAO = TicketDAOImpl.getInstance();
             ticketDAO.returnTicket(id);
 
         } else {
-            TicketDAO ticketDAO = TicketDAODB.getInstance();
+            TicketDAO<Ticket, Integer> ticketDAO = TicketDAODB.getInstance();
             ticketDAO.returnTicket(id);
         }
 
@@ -57,7 +57,7 @@ public final class TicketServiceImpl implements TicketService {
     public List<TicketDTO> getAllSoldTicketFromSession(Integer id) {
         List<TicketDTO> ticketDTOs = new LinkedList<>();
         if (isDB) {
-            TicketDAO ticketDAO = TicketDAODB.getInstance();
+            TicketDAO<Ticket, Integer> ticketDAO = TicketDAODB.getInstance();
             List<Ticket> tickets = ticketDAO.getAllSoldTicketFromSession(id);
             ticketDTOs = Transformer.listSeatsToListSeatsDTO(tickets);
         }
@@ -68,11 +68,11 @@ public final class TicketServiceImpl implements TicketService {
     public List<TicketDTO> getAll() {
         List<TicketDTO> ticketDTOs = new LinkedList<>();
         if (!isDB) {
-            TicketDAO ticketDAO = TicketDAOImpl.getInstance();
+            TicketDAO<Ticket, Integer> ticketDAO = TicketDAOImpl.getInstance();
             List<Ticket> tickets = ticketDAO.getAll();
             ticketDTOs = Transformer.listSeatsToListSeatsDTO(tickets);
         } else {
-            TicketDAO ticketDAO = TicketDAODB.getInstance();
+            TicketDAO<Ticket, Integer> ticketDAO = TicketDAODB.getInstance();
             List<Ticket> tickets = ticketDAO.getAll();
             ticketDTOs = Transformer.listSeatsToListSeatsDTO(tickets);
         }
@@ -82,11 +82,11 @@ public final class TicketServiceImpl implements TicketService {
     @Override
     public void create(TicketDTO ticketDto) {
         if (!isDB) {
-            TicketDAO ticketDAO = TicketDAOImpl.getInstance();
+            TicketDAO<Ticket, Integer> ticketDAO = TicketDAOImpl.getInstance();
             Ticket ticket = Transformer.ticketDTOToTicket(ticketDto);
             ticketDAO.create(ticket);
         } else {
-            TicketDAO ticketDAO = TicketDAODB.getInstance();
+            TicketDAO<Ticket, Integer> ticketDAO = TicketDAODB.getInstance();
             Ticket ticket = Transformer.ticketDTOToTicket(ticketDto);
             ticketDAO.create(ticket);
         }
@@ -96,12 +96,12 @@ public final class TicketServiceImpl implements TicketService {
     public TicketDTO get(Integer id) {
         TicketDTO ticketDTO = null;
         if (!isDB) {
-            TicketDAO ticketDAO = TicketDAOImpl.getInstance();
-            Ticket ticket = (Ticket) ticketDAO.get(id);
+            TicketDAO<Ticket, Integer> ticketDAO = TicketDAOImpl.getInstance();
+            Ticket ticket = ticketDAO.get(id);
             ticketDTO = Transformer.ticketToTicketDTO(ticket);
         } else {
-            TicketDAO ticketDAO = TicketDAODB.getInstance();
-            Ticket ticket = (Ticket) ticketDAO.get(id);
+            TicketDAO<Ticket, Integer> ticketDAO = TicketDAODB.getInstance();
+            Ticket ticket = ticketDAO.get(id);
             ticketDTO = Transformer.ticketToTicketDTO(ticket);
         }
         return ticketDTO;
@@ -111,12 +111,12 @@ public final class TicketServiceImpl implements TicketService {
     public TicketDTO update(TicketDTO ticketDTO) {
         TicketDTO ticketDTO1 = null;
         if (!isDB) {
-            TicketDAO ticketDAO = TicketDAOImpl.getInstance();
-            Ticket ticket = (Ticket) ticketDAO.update(Transformer.ticketDTOToTicket(ticketDTO));
+            TicketDAO<Ticket, Integer> ticketDAO = TicketDAOImpl.getInstance();
+            Ticket ticket = ticketDAO.update(Transformer.ticketDTOToTicket(ticketDTO));
             ticketDTO1 = Transformer.ticketToTicketDTO(ticket);
         } else {
-            TicketDAO ticketDAO = TicketDAODB.getInstance();
-            Ticket ticket = (Ticket) ticketDAO.update(Transformer.ticketDTOToTicket(ticketDTO));
+            TicketDAO<Ticket, Integer> ticketDAO = TicketDAODB.getInstance();
+            Ticket ticket = ticketDAO.update(Transformer.ticketDTOToTicket(ticketDTO));
             ticketDTO1 = Transformer.ticketToTicketDTO(ticket);
         }
         return ticketDTO1;
@@ -125,10 +125,10 @@ public final class TicketServiceImpl implements TicketService {
     @Override
     public void delete(Integer id) {
         if (!isDB) {
-            TicketDAO ticketDAO = TicketDAOImpl.getInstance();
+            TicketDAO<Ticket, Integer> ticketDAO = TicketDAOImpl.getInstance();
             ticketDAO.delete(id);
         } else {
-            TicketDAO ticketDAO = TicketDAODB.getInstance();
+            TicketDAO<Ticket, Integer> ticketDAO = TicketDAODB.getInstance();
             ticketDAO.delete(id);
         }
 

@@ -2,6 +2,8 @@ package com.cinema.web;
 
 
 import com.cinema.dto.*;
+import com.cinema.exception.UserLoginException;
+import com.cinema.model.Role;
 import com.cinema.service.api.*;
 import com.cinema.service.impl.*;
 
@@ -74,7 +76,7 @@ public class Main {
 
 
         //sessionService.create(session);
-        System.out.println(sessionService.getALLSessionsWithAllData());*/
+        System.out.println(sessionService.getALLSessionsWithAllData());
         TicketService ticketService = TicketServiceImpl.getInstance();
         SessionService sessionService = SessionServiceImpl.getInstance();
 
@@ -82,8 +84,20 @@ public class Main {
         System.out.println(ticketService.getAllSoldTicketFromSession(1));
         System.out.println(sessionService.getALLSessionsWithAllData());
         ticketService.purchaseTicket(2,4,1);
-        ticketService.returnTicket(3);
+        ticketService.returnTicket(3);*/
+        UserService userService = UserServiceImpl.getInstance();
 
+        UserDTO user = new UserDTO();
+
+        user.setEmail( "@.gmail.com");
+        user.setPassword("1");
+        user.setLogin("login10");
+        user.setRole(Role.USER);
+
+            userService.create(user);
+
+
+        //System.out.println(userService.findUser("login0", "1"));
     }
 
 

@@ -1,9 +1,11 @@
 package com.cinema.dao.impl;
 
 import com.cinema.dao.api.Dao;
+import com.cinema.dao.api.UserDAO;
 import com.cinema.dao.storage.LocalDatePersistenceConverter;
 import com.cinema.dao.storage.LocalDateTimePersistenceConverter;
 import com.cinema.datasource.DataSource;
+import com.cinema.exception.UserLoginException;
 import com.cinema.model.*;
 
 import java.sql.*;
@@ -94,12 +96,14 @@ public abstract class CrudDAODataBase<T, Integer> implements Dao<T, Integer> {
     }
 
 
-    public void create(T entity) {
+    public void create(T entity){
         Connection connection = instance.getConnection();
         try {
             PreparedStatement preparedStatement = createInsertStatement(connection, entity);
-            preparedStatement.executeUpdate();
+           preparedStatement.executeUpdate();
         } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (UserLoginException e) {
             e.printStackTrace();
         }
     }
@@ -140,7 +144,7 @@ public abstract class CrudDAODataBase<T, Integer> implements Dao<T, Integer> {
         return obj;
     }
 
-    private PreparedStatement createInsertStatement(Connection connection, T entity) throws SQLException {
+    private PreparedStatement createInsertStatement(Connection connection, T entity) throws SQLException, UserLoginException {
         PreparedStatement preparedStatement = null;
         String sql = null;
 
@@ -154,18 +158,20 @@ public abstract class CrudDAODataBase<T, Integer> implements Dao<T, Integer> {
                 preparedStatement.setLong(3, movie.getDuration());
                 break;
             case USER:
-                //todo check uniqe login/password
+                UserDAO userDAO = UserDAODB.getInstance();
                 User user = (User) entity;
-                sql = String.format(INSERT, stringMap.get(type), " (first_name, last_name, email, login, password, date, role) values (?,?,?,?,?,?,?)");
-                preparedStatement = connection.prepareStatement(sql);
-                preparedStatement.setString(1, user.getFirstName());
-                preparedStatement.setString(2, user.getLastName());
-                preparedStatement.setString(3, user.getEmail());
-                preparedStatement.setString(4, user.getLogin());
-                preparedStatement.setString(5, user.getPassword());
-                Date date = converter.convertToDatabaseColumn(user.getDate());
-                preparedStatement.setDate(6, date);
-                preparedStatement.setString(7, String.valueOf(user.getRole()));
+                if(userDAO.checkUser(user.getLogin())) {
+                    sql = String.format(INSERT, stringMap.get(type), " (first_name, last_name, email, login, password, date, role) values (?,?,?,?,?,?,?)");
+                    preparedStatement = connection.prepareStatement(sql);
+                    preparedStatement.setString(1, user.getFirstName());
+                    preparedStatement.setString(2, user.getLastName());
+                    preparedStatement.setString(3, user.getEmail());
+                    preparedStatement.setString(4, user.getLogin());
+                    preparedStatement.setString(5, user.getPassword());
+                    Date date = converter.convertToDatabaseColumn(user.getDate());
+                    preparedStatement.setDate(6, date);
+                    preparedStatement.setString(7, String.valueOf(user.getRole()));
+                } else throw new RuntimeException("Login is already used");
                 break;
             case HALL:
                 Hall hall = (Hall) entity;
@@ -291,32 +297,6 @@ public abstract class CrudDAODataBase<T, Integer> implements Dao<T, Integer> {
         return result;
     }
 
-   /* private Movie findMovieByIdInDB(Integer id) throws SQLException {
-        Movie movie = null;
-        Connection connection = instance.getConnection();
-        String sql = String.format("Select * from movie where id = ?");
-        PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setInt(1, (java.lang.Integer) id);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        if (resultSet.next()) {
-            movie = createMovie(resultSet);
-            System.out.println(movie);
-        }
-        return movie;
-    }
-
-    private Hall findHallByIdInDB(Integer id) throws SQLException {
-        Hall hall = null;
-        Connection connection = instance.getConnection();
-        String sql = String.format("Select * from hall where id = ?");
-        PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setInt(1, (java.lang.Integer) id);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        if (resultSet.next()) {
-            hall = createHall(resultSet);
-        }
-        return hall;
-    }*/
 
     private Session createSession(ResultSet resultSet) throws SQLException {
         Session session = new Session();

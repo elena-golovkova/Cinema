@@ -3,6 +3,7 @@ package com.cinema.dao.impl;
 import com.cinema.dao.api.UserDAO;
 import com.cinema.dao.storage.InMemoryDB;
 import com.cinema.exception.UserException;
+import com.cinema.exception.UserLoginException;
 import com.cinema.model.User;
 
 
@@ -30,5 +31,10 @@ public class UserDAOImpl extends AbstractDAOInMemory<User, Integer> implements U
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public boolean checkUser(String login) throws UserLoginException {
+        return false;
     }
 }

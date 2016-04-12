@@ -64,16 +64,18 @@ public class Transformer {
     }
 
     public static UserDTO userToUserDto(User user) {
-        UserDTO userDTO = new UserDTO();
-
-        userDTO.setId(user.getId());
-        userDTO.setFirstName(user.getFirstName());
-        userDTO.setLastName(user.getLastName());
-        userDTO.setLogin(user.getLogin());
-        userDTO.setPassword(user.getPassword());
-        userDTO.setEmail(user.getEmail());
-        userDTO.setRole(user.getRole());
-        userDTO.setDate(user.getDate());
+        UserDTO userDTO = null;
+        if (user != null) {
+            userDTO = new UserDTO();
+            userDTO.setId(user.getId());
+            userDTO.setFirstName(user.getFirstName());
+            userDTO.setLastName(user.getLastName());
+            userDTO.setLogin(user.getLogin());
+            userDTO.setPassword(user.getPassword());
+            userDTO.setEmail(user.getEmail());
+            userDTO.setRole(user.getRole());
+            userDTO.setDate(user.getDate());
+        }
         return userDTO;
     }
 
