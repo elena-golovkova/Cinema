@@ -34,22 +34,18 @@ public class InMemoryDB<T, K> {
         return inMemoryDB;
     }
 
-    public void create(T t) throws UserLoginException {
+    public void create(T t) {
         if (t instanceof User) {
-            if (userLoginIsUnique(((User) t).getLogin())) {
-                ((User) t).setId(++userIdsCounter);
-                synchronized (users) {
-                    users.add((User) t);
-                }
-
-            } else throw new UserLoginException("Not unique login");
+            ((User) t).setId(++userIdsCounter);
+            synchronized (users) {
+                users.add((User) t);
+            }
 
         } else if (t instanceof Movie) {
             ((Movie) t).setId(++movieIdsCounter);
             synchronized (movies) {
                 movies.add((Movie) t);
             }
-            System.out.println(t);
 
         } else if (t instanceof Ticket) {
             ((Ticket) t).setId(++ticketIdsCounter);
@@ -245,7 +241,7 @@ public class InMemoryDB<T, K> {
         throw new NoSuchElementException("There is no such id");
     }
 
-    private boolean userLoginIsUnique(String login) {
+    public boolean userLoginIsUnique(String login) {
         if (users == null) return true;
         for (User user : users) {
             if (user.getLogin().equals(login)) {
@@ -304,7 +300,6 @@ public class InMemoryDB<T, K> {
         }
         throw new NoSuchElementException("There is no such id");
     }
-
 
 
     private Ticket findTicketBySessionId(int row, int column, int sessionId) {

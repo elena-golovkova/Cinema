@@ -17,11 +17,8 @@ public class AbstractDAOInMemory<T, K> implements Dao<T, K> {
 
     public void create(T t) {
         InMemoryDB instance = InMemoryDB.getInstance();
-        try {
-            instance.create(t);
-        } catch (UserLoginException e) {
-            e.printStackTrace();
-        }
+        instance.create(t);
+
     }
 
     public List<T> getAll() {
@@ -32,7 +29,7 @@ public class AbstractDAOInMemory<T, K> implements Dao<T, K> {
 
     public T update(T t) {
         InMemoryDB instance = InMemoryDB.getInstance();
-        return  (T)instance.update(t);
+        return (T) instance.update(t);
     }
 
     public void delete(K id) {
@@ -41,7 +38,7 @@ public class AbstractDAOInMemory<T, K> implements Dao<T, K> {
         instance.delete(entity, id);
     }
 
-    public T get(K id){
+    public T get(K id) {
         Class entity = getPersistentClass();
         InMemoryDB instance = InMemoryDB.getInstance();
         return (T) instance.get(entity, id);

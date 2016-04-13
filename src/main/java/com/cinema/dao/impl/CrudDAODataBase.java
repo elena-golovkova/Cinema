@@ -96,14 +96,12 @@ public abstract class CrudDAODataBase<T, Integer> implements Dao<T, Integer> {
     }
 
 
-    public void create(T entity){
+    public void create(T entity) {
         Connection connection = instance.getConnection();
         try {
             PreparedStatement preparedStatement = createInsertStatement(connection, entity);
-           preparedStatement.executeUpdate();
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (UserLoginException e) {
             e.printStackTrace();
         }
     }
@@ -144,7 +142,7 @@ public abstract class CrudDAODataBase<T, Integer> implements Dao<T, Integer> {
         return obj;
     }
 
-    private PreparedStatement createInsertStatement(Connection connection, T entity) throws SQLException, UserLoginException {
+    private PreparedStatement createInsertStatement(Connection connection, T entity) throws SQLException {
         PreparedStatement preparedStatement = null;
         String sql = null;
 
@@ -160,18 +158,16 @@ public abstract class CrudDAODataBase<T, Integer> implements Dao<T, Integer> {
             case USER:
                 UserDAO userDAO = UserDAODB.getInstance();
                 User user = (User) entity;
-                if(userDAO.checkUser(user.getLogin())) {
-                    sql = String.format(INSERT, stringMap.get(type), " (first_name, last_name, email, login, password, date, role) values (?,?,?,?,?,?,?)");
-                    preparedStatement = connection.prepareStatement(sql);
-                    preparedStatement.setString(1, user.getFirstName());
-                    preparedStatement.setString(2, user.getLastName());
-                    preparedStatement.setString(3, user.getEmail());
-                    preparedStatement.setString(4, user.getLogin());
-                    preparedStatement.setString(5, user.getPassword());
-                    Date date = converter.convertToDatabaseColumn(user.getDate());
-                    preparedStatement.setDate(6, date);
-                    preparedStatement.setString(7, String.valueOf(user.getRole()));
-                } else throw new RuntimeException("Login is already used");
+                sql = String.format(INSERT, stringMap.get(type), " (first_name, last_name, email, login, password, date, role) values (?,?,?,?,?,?,?)");
+                preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1, user.getFirstName());
+                preparedStatement.setString(2, user.getLastName());
+                preparedStatement.setString(3, user.getEmail());
+                preparedStatement.setString(4, user.getLogin());
+                preparedStatement.setString(5, user.getPassword());
+                Date date = converter.convertToDatabaseColumn(user.getDate());
+                preparedStatement.setDate(6, date);
+                preparedStatement.setString(7, String.valueOf(user.getRole()));
                 break;
             case HALL:
                 Hall hall = (Hall) entity;

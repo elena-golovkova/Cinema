@@ -1,7 +1,5 @@
 package com.cinema.dao.api;
 
-import com.cinema.exception.UserLoginException;
-
 import java.util.List;
 
 public interface Dao<T, K> {

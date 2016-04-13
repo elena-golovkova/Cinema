@@ -8,5 +8,6 @@ import java.util.List;
 public interface UserDAO<User, Integer> extends Dao<User, Integer> {
 
       User findUser(String login, String password);
-      boolean checkUser(String login) throws UserLoginException;
+      void checkUser(String login) throws UserLoginException;
+      public void createUser(User user) throws UserLoginException;
 }

@@ -62,7 +62,7 @@ public class UserDAODB extends CrudDAODataBase<User, Integer> implements UserDAO
     }
 
     @Override
-    public boolean checkUser(String login) throws UserLoginException {
+    public void checkUser(String login) throws UserLoginException {
         boolean check = true;
         Connection connection = instance.getConnection();
         PreparedStatement preparedStatement = null;
@@ -88,7 +88,12 @@ public class UserDAODB extends CrudDAODataBase<User, Integer> implements UserDAO
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        if (user != null) check = false;
-        return check;
+        if (user != null) throw new UserLoginException("Login");
+
+    }
+
+    public void createUser(User entity) throws UserLoginException {
+        userDAO.checkUser(entity.getLogin());
+        super.create(entity);
     }
 }

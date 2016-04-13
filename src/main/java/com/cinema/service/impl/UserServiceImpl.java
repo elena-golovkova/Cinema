@@ -62,14 +62,18 @@ public final class UserServiceImpl implements UserService {
 
     @Override
     public void create(UserDTO userDTO) {
+
+    }
+
+    public void createUser(UserDTO userDTO) throws UserLoginException {
         if (!isBD) {
             UserDAO userDAO = UserDAOImpl.getInstance();
             User user = Transformer.userDTOToUser(userDTO);
-            userDAO.create(user);
+            userDAO.createUser(user);
         } else {
-            UserDAO userDAO = UserDAODB.getInstance();
+            UserDAODB userDAO = UserDAODB.getInstance();
             User user = Transformer.userDTOToUser(userDTO);
-            userDAO.create(user);
+            userDAO.createUser(user);
         }
     }
 

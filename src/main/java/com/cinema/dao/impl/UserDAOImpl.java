@@ -34,7 +34,14 @@ public class UserDAOImpl extends AbstractDAOInMemory<User, Integer> implements U
     }
 
     @Override
-    public boolean checkUser(String login) throws UserLoginException {
-        return false;
+    public void checkUser(String login) throws UserLoginException {
+        InMemoryDB instance = InMemoryDB.getInstance();
+        if(!instance.userLoginIsUnique(login)) throw new UserLoginException("Login is already used");
+    }
+
+
+    public void createUser(User user) throws UserLoginException {
+        checkUser(user.getLogin());
+        super.create(user);
     }
 }

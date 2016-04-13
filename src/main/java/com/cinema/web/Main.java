@@ -1,8 +1,11 @@
 package com.cinema.web;
 
 
+import com.cinema.Transformer;
 import com.cinema.dto.*;
 import com.cinema.exception.UserLoginException;
+import com.cinema.model.Hall;
+import com.cinema.model.Movie;
 import com.cinema.model.Role;
 import com.cinema.service.api.*;
 import com.cinema.service.impl.*;
@@ -29,7 +32,8 @@ public class Main {
         thread1.join();
         thread2.join();
         thread3.join();
-        thread4.join();
+        thread4.join();*/
+        //HallService hallService = HallServiceImpl.getInstance();
 
         TicketService ticketService = TicketServiceImpl.getInstance();
         for (int j = 1; j < 6; j++) {
@@ -39,32 +43,21 @@ public class Main {
             ticketService.create(ticketDTO);
         }
 
-        System.out.println(ticketService.getAll());
         HallService hallService = HallServiceImpl.getInstance();
         HallDTO hallDTO = new HallDTO();
         hallDTO.setName("blue");
         hallDTO.setColumnCount(10);
         hallDTO.setRowCount(10);
         hallService.create(hallDTO);
-        System.out.println(hallService.getAll());
-        System.out.println(hallService.get(2));
-        hallService.delete(1);
 
-         TicketService ticketService = TicketServiceImpl.getInstance();
         for (int j = 2; j < 6; j++) {
             TicketDTO ticketDTO = new TicketDTO();
             ticketDTO.setRow(1);
             ticketDTO.setColumn(j);
-            //ticketService.create(ticketDTO);
+            ticketService.create(ticketDTO);
         }
         ticketService.delete(1);
-        System.out.println(ticketService.getAll());
-        HallService hallService = HallServiceImpl.getInstance();
-        HallDTO hallDTO = new HallDTO();
-        hallDTO.setName("blue");
-        hallDTO.setColumnCount(10);
-        hallDTO.setRowCount(10);
-        hallService.create(hallDTO);
+
 
         Hall hall = Transformer.hallDtoToHall(hallDTO);
         Movie movie = new Movie();
@@ -73,44 +66,27 @@ public class Main {
         session.setHall(hall);
         session.setMovie(movie);
         session.setId(1);
-
-
-        //sessionService.create(session);
-        System.out.println(sessionService.getALLSessionsWithAllData());
-        TicketService ticketService = TicketServiceImpl.getInstance();
         SessionService sessionService = SessionServiceImpl.getInstance();
+        //sessionService.create(session);
 
-        System.out.println(sessionService.getAll());
-        System.out.println(ticketService.getAllSoldTicketFromSession(1));
-        System.out.println(sessionService.getALLSessionsWithAllData());
-        ticketService.purchaseTicket(2,4,1);
-        ticketService.returnTicket(3);*/
+
+        ticketService.purchaseTicket(2, 4, 1);
+        ticketService.returnTicket(3);
         UserService userService = UserServiceImpl.getInstance();
 
         UserDTO user = new UserDTO();
 
-        user.setEmail( "@.gmail.com");
-        user.setPassword("1");
-        user.setLogin("login10");
+        user.setEmail("@.gmail.com");
+        user.setPassword("15");
+        user.setLogin("lena7");
         user.setRole(Role.USER);
 
-            userService.create(user);
+        try {
+            userService.createUser(user);
+        } catch (UserLoginException e) {
+            e.printStackTrace();
+        }
 
-
-        //System.out.println(userService.findUser("login0", "1"));
-    }
-
-
-    public static LocalDate fromDate(Date date) {
-        Instant instant = Instant.ofEpochMilli(date.getTime());
-        return LocalDateTime.ofInstant(instant, ZoneId.systemDefault())
-                .toLocalDate();
-    }
-
-}
-
-class MovieThread extends Thread {
-    public void run() {
         MovieService movieService = MovieServiceImpl.getInstance();
 
         for (int i = 0; i < 10; i++) {
@@ -119,15 +95,33 @@ class MovieThread extends Thread {
             movieDTO.setDescription("Description" + Thread.currentThread().getName() + " №" + i);
             movieDTO.setDuration(1000000l + i);
             movieService.create(movieDTO);
-
         }
 
+      /*  System.out.println(userService.getAll());
+        System.out.println(sessionService.getAll());
+        System.out.println(movieService.getAll());
+        System.out.println(hallService.getAll());
+        System.out.println(ticketService.getAll());*/
+    }
+
+}
+
+
+class MovieThread extends Thread {
+    public void run() {
+        MovieService movieService = MovieServiceImpl.getInstance();
+        for (int i = 0; i < 10; i++) {
+            MovieDTO movieDTO = new MovieDTO();
+            movieDTO.setTitle("Title " + Thread.currentThread().getName() + " №" + i);
+            movieDTO.setDescription("Description" + Thread.currentThread().getName() + " №" + i);
+            movieDTO.setDuration(1000000l + i);
+            // movieService.create(movieDTO);
+        }
         MovieDTO movieDTO = new MovieDTO();
         movieDTO.setId(1);
         movieDTO.setTitle("~~~~~Changed Title" + Thread.currentThread().getName());
         movieDTO.setDescription("~~~~~Changed Description" + Thread.currentThread().getName());
         movieDTO.setDuration(1000000l);
-
     }
 }
 
