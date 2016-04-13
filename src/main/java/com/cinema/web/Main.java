@@ -20,21 +20,6 @@ public class Main {
 
     public static void main(String[] args) throws InterruptedException {
 
-      /*  Thread thread1 = new MovieThread();
-        Thread thread2 = new MovieThread();
-        Thread thread3 = new MovieThread();
-        Thread thread4 = new MovieThread();
-        thread1.start();
-        thread2.start();
-        thread3.start();
-        thread4.start();
-
-        thread1.join();
-        thread2.join();
-        thread3.join();
-        thread4.join();*/
-        //HallService hallService = HallServiceImpl.getInstance();
-
         TicketService ticketService = TicketServiceImpl.getInstance();
         for (int j = 1; j < 6; j++) {
             TicketDTO ticketDTO = new TicketDTO();
@@ -104,24 +89,5 @@ public class Main {
         System.out.println(ticketService.getAll());*/
     }
 
-}
-
-
-class MovieThread extends Thread {
-    public void run() {
-        MovieService movieService = MovieServiceImpl.getInstance();
-        for (int i = 0; i < 10; i++) {
-            MovieDTO movieDTO = new MovieDTO();
-            movieDTO.setTitle("Title " + Thread.currentThread().getName() + " №" + i);
-            movieDTO.setDescription("Description" + Thread.currentThread().getName() + " №" + i);
-            movieDTO.setDuration(1000000l + i);
-            // movieService.create(movieDTO);
-        }
-        MovieDTO movieDTO = new MovieDTO();
-        movieDTO.setId(1);
-        movieDTO.setTitle("~~~~~Changed Title" + Thread.currentThread().getName());
-        movieDTO.setDescription("~~~~~Changed Description" + Thread.currentThread().getName());
-        movieDTO.setDuration(1000000l);
-    }
 }
 
