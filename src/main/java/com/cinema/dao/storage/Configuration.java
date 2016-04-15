@@ -1,6 +1,7 @@
 package com.cinema.dao.storage;
 
 import java.io.*;
+import java.net.URL;
 import java.util.NoSuchElementException;
 import java.util.Properties;
 
@@ -13,11 +14,10 @@ public final class Configuration {
     public static final String JDBC_URL = "db.JdbcUrl";
     private Properties prop;
 
-
     private Configuration() {
-        String path = "src\\main\\resources\\property.properties";
         prop = new Properties();
-        try (InputStream input = new FileInputStream(new File(path))) {
+        final String path = "E:\\java\\Cinema\\src\\resources\\property.properties";
+        try (InputStream input = new FileInputStream(new File(String.valueOf(path)))) {
             prop.load(input);
         } catch (IOException e) {
             e.printStackTrace();
@@ -35,8 +35,10 @@ public final class Configuration {
         return configuration;
     }
 
+
     public synchronized String getProperty(String key) {
         String value = null;
+
         if (prop.containsKey(key))
             value = (String) prop.get(key);
         else {

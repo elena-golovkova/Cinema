@@ -1,7 +1,8 @@
-package com.cinema.web;
+package com.cinema.controller;
 
 
 import com.cinema.Transformer;
+import com.cinema.dao.storage.Configuration;
 import com.cinema.dto.*;
 import com.cinema.exception.UserLoginException;
 import com.cinema.model.Hall;
@@ -10,17 +11,11 @@ import com.cinema.model.Role;
 import com.cinema.service.api.*;
 import com.cinema.service.impl.*;
 
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.*;
-
 public class Main {
 
     public static void main(String[] args) throws InterruptedException {
 
-        TicketService ticketService = TicketServiceImpl.getInstance();
+       /* TicketService ticketService = TicketServiceImpl.getInstance();
         for (int j = 1; j < 6; j++) {
             TicketDTO ticketDTO = new TicketDTO();
             ticketDTO.setRow(1);
@@ -56,23 +51,24 @@ public class Main {
 
 
         ticketService.purchaseTicket(2, 4, 1);
-        ticketService.returnTicket(3);
-        UserService userService = UserServiceImpl.getInstance();
+        ticketService.returnTicket(3);*/
 
-        UserDTO user = new UserDTO();
+       /* UserService userService = UserServiceImpl.getInstance();
 
-        user.setEmail("@.gmail.com");
-        user.setPassword("15");
-        user.setLogin("lena7");
-        user.setRole(Role.USER);
-
+        UserDTO userDTO = new UserDTO();
+        userDTO.setFirstName("Lena");
+        userDTO.setLastName("Golovkova");
+        userDTO.setEmail("golovkova@gmail.com");
+        userDTO.setPassword("papa");
+        userDTO.setLogin("papa");
+        userDTO.setRole(Role.USER);
         try {
-            userService.createUser(user);
+            userService.createUser(userDTO);
         } catch (UserLoginException e) {
             e.printStackTrace();
         }
-
-        MovieService movieService = MovieServiceImpl.getInstance();
+*/
+              /* MovieService movieService = MovieServiceImpl.getInstance();
 
         for (int i = 0; i < 10; i++) {
             MovieDTO movieDTO = new MovieDTO();
@@ -87,6 +83,7 @@ public class Main {
         System.out.println(movieService.getAll());
         System.out.println(hallService.getAll());
         System.out.println(ticketService.getAll());*/
+
     }
 
 }
