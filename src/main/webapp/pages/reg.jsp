@@ -6,7 +6,8 @@
           <title>Registration</title>
       </head>
     <body>
-        <form method="post" action="reg.jsp">
+        <form method="post" action="/registration">
+
               <center>
               <table border="1" width="30%" cellpadding="5">
                   <thead>
@@ -29,7 +30,7 @@
                       </tr>
                     <tr>
                           <td>Birthday</td>
-                          <td><input type="text" name="date" value="" /></td>
+                          <td><input type="date" name="date" value="" /></td>
                       </tr>
                     <tr>
                           <td>Login</td>

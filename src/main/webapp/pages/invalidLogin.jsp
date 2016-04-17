@@ -1,27 +1,40 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Елена
-  Date: 15.04.2016
-  Time: 21:47
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
 <html>
+    <head>
+          <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+          <title>Login</title>
+      </head>
+    <body>
+<p align="center" style="color:red"> <%=request.getAttribute("noSuchUser")%>
+        <form method="post" action="/cinema/login">
+              <center>
+              <table border="1" width="30%" cellpadding="3">
+                  <thead>
+                    <tr>
+                          <th colspan="2">Login Here</th>
+                      </tr>
+                </thead>
+                  <tbody>
+                    <tr>
+                          <td>Login</td>
+                          <td><input type="text" name="login" value="" /></td>
+                      </tr>
+                    <tr>
+                          <td>Password</td>
+                          <td><input type="password" name="pass" value="" /></td>
+                      </tr>
+                    <tr>
+                          <th colspan="2" align="centre"> <input type="submit" value="Login" /></th>
+                          
+                      </tr>
+                    <tr>
+                          <td colspan="2">Not Registered Yet? <a href="/registration">Register Here</a></td>
+                      </tr>
+                </tbody>
+              </table>
+              </center>
+          </form>
 
-<head>
-  <meta http-equiv="Content-Type"
-        content="text/html; charset=UTF-8">
-  <title>Invalid Login</title>
-</head>
-
-<body>
-
-<h2>Sorry, you are not a registered user! Please sign up first.</h2>
-<div align="left">
-  <a href="/login">Login</a>
-  <a href="/registration">Registration</a>
-</div>
-
-</body>
-
+    </body>
 </html>

@@ -11,10 +11,12 @@ import com.cinema.model.Role;
 import com.cinema.service.api.*;
 import com.cinema.service.impl.*;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class Main {
 
-    public static void main(String[] args) throws InterruptedException {
-
+    public static void main(String[] args) {
        /* TicketService ticketService = TicketServiceImpl.getInstance();
         for (int j = 1; j < 6; j++) {
             TicketDTO ticketDTO = new TicketDTO();
@@ -51,24 +53,8 @@ public class Main {
 
 
         ticketService.purchaseTicket(2, 4, 1);
-        ticketService.returnTicket(3);*/
-
-       /* UserService userService = UserServiceImpl.getInstance();
-
-        UserDTO userDTO = new UserDTO();
-        userDTO.setFirstName("Lena");
-        userDTO.setLastName("Golovkova");
-        userDTO.setEmail("golovkova@gmail.com");
-        userDTO.setPassword("papa");
-        userDTO.setLogin("papa");
-        userDTO.setRole(Role.USER);
-        try {
-            userService.createUser(userDTO);
-        } catch (UserLoginException e) {
-            e.printStackTrace();
-        }
-*/
-              /* MovieService movieService = MovieServiceImpl.getInstance();
+        ticketService.returnTicket(3);
+         MovieService movieService = MovieServiceImpl.getInstance();
 
         for (int i = 0; i < 10; i++) {
             MovieDTO movieDTO = new MovieDTO();
@@ -78,13 +64,41 @@ public class Main {
             movieService.create(movieDTO);
         }
 
-      /*  System.out.println(userService.getAll());
+       System.out.println(userService.getAll());
         System.out.println(sessionService.getAll());
         System.out.println(movieService.getAll());
         System.out.println(hallService.getAll());
-        System.out.println(ticketService.getAll());*/
+        System.out.println(ticketService.getAll());
+
+        */
+
+       UserService userService = UserServiceImpl.getInstance();
+
+        UserDTO userDTO = new UserDTO();
+        userDTO.setFirstName("Lena16");
+        userDTO.setLastName("Golovkova");
+        userDTO.setEmail("golovkova@gmail.com");
+        userDTO.setPassword("18");
+        userDTO.setLogin("18");
+        userDTO.setRole(Role.USER);
+
+        System.out.println(userService.findUser("17", "17"));
+
+        MovieService movieService = MovieServiceImpl.getInstance();
+        for (int i = 0; i < 10; i++) {
+            MovieDTO movieDTO = new MovieDTO();
+            movieDTO.setTitle("Title " + Thread.currentThread().getName() + " №" + i);
+            movieDTO.setDescription("Description" + Thread.currentThread().getName() + " №" + i);
+            movieDTO.setDuration(1000000l + i);
+            movieService.create(movieDTO);
+        }
+
+        String date = "1987-05-29";
+        System.out.println(date);
+        System.out.println(System.getProperty("java.class.path"));
 
     }
+
 
 }
 

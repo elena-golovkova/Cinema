@@ -1,0 +1,7 @@
+  create table if not exists`hall` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+    `name` varchar(100) DEFAULT NULL,
+    `row_count` int DEFAULT NULL,
+    `column_count` int DEFAULT NULL,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `id` (`id`))
