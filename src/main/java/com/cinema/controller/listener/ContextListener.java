@@ -1,19 +1,17 @@
 package com.cinema.controller.listener;
 
 import com.cinema.datasource.DataSource;
+import org.apache.commons.io.IOUtils;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
-import java.io.BufferedInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Scanner;
 
 
 public class ContextListener implements ServletContextListener {
@@ -24,16 +22,10 @@ public class ContextListener implements ServletContextListener {
         String[] sqlList = null;
         String sql = null;
         System.out.println("Context is initialised");
-        String fileName = "E:\\java\\Cinema\\src\\main\\webapp\\sql\\schema.sql";
-        try {
-            sql = new String(Files.readAllBytes(Paths.get(fileName)));
+        String sqlFile = "db\\schema.sql";
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        //Относительный путь не работает
-       /* InputStream str = getClass().getResourceAsStream("WEB-INF/sql/schema.sql");
-        sql = readStream(str);*/
+        sql = getFileWithUtil(sqlFile);
+
         if (sql != null) {
 
             sqlList = sql.split(";");
@@ -55,24 +47,41 @@ public class ContextListener implements ServletContextListener {
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
-        System.out.println("Context is destroyed");
+
     }
 
-    protected String readStream(InputStream stream) {
-        BufferedInputStream bis = new BufferedInputStream(stream);
-        ByteArrayOutputStream buf = new ByteArrayOutputStream();
-        try {
-            int result = bis.read();
-            while (result != -1) {
-                byte b = (byte) result;
-                buf.write(b);
-                result = bis.read();
+
+    private String getFile(String fileName) {
+        StringBuilder result = new StringBuilder("");
+        ClassLoader classLoader = getClass().getClassLoader();
+        File file = new File(classLoader.getResource(fileName).getFile());
+
+        try (Scanner scanner = new Scanner(file)) {
+
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                result.append(line).append("\n");
             }
+            scanner.close();
+
         } catch (IOException e) {
-            return null;
-        } finally {
-            return buf.toString();
+            e.printStackTrace();
+        }
+        return result.toString();
+
+    }
+
+    private String getFileWithUtil(String fileName) {
+        String result = "";
+        ClassLoader classLoader = getClass().getClassLoader();
+        try {
+            result = IOUtils.toString(classLoader.getResourceAsStream(fileName));
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
+        return result;
     }
+
 }
+

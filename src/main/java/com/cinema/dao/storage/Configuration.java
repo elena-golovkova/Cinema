@@ -16,12 +16,14 @@ public final class Configuration {
 
     private Configuration() {
         prop = new Properties();
-        final String path = "E:\\java\\Cinema\\src\\resources\\property.properties";
+        prop = PropertyUtils.getProperties();
+      /*  final String path = "E:\\java\\Cinema\\src\\resources\\property.properties";
         try (InputStream input = new FileInputStream(new File(String.valueOf(path)))) {
             prop.load(input);
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
+
     }
 
     public static Configuration getInstance() {

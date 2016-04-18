@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
@@ -20,18 +22,33 @@ public class LoginServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse resp)
             throws ServletException, IOException {
 
-        request.getRequestDispatcher("pages/login.jsp").forward(request, resp);
+        request.getRequestDispatcher("pages/loginnew.jsp").forward(request, resp);
     }
 
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        PrintWriter out = response.getWriter();
+        Map<String, String> messages = new HashMap<String, String>();
+        request.setAttribute("messages", messages);
         UserDTO user = new UserDTO();
-        String login = request.getParameter("login");
-        String pass = request.getParameter("pass");
 
-        UserService userService = UserServiceImpl.getInstance();
+
+
+        String login = request.getParameter("login");
+        if (login == null || login.trim().isEmpty()) {
+            messages.put("login", "Please enter login");
+        }
+        String pass = request.getParameter("pass");
+        if (pass == null || pass.trim().isEmpty()) {
+            messages.put("pass", "Please enter pass");
+        }
+        if (messages.isEmpty()) {
+            messages.put("success", "Form successfully submitted!");
+        }
+
+        request.getRequestDispatcher("/pages/loginnew.jsp").forward(request, response);
+
+       /* UserService userService = UserServiceImpl.getInstance();
         user = userService.findUser(login, pass);
         if (user != null) {
             HttpSession session = request.getSession(true);
@@ -42,7 +59,7 @@ public class LoginServlet extends HttpServlet {
             request.setAttribute("noSuchUser", "Login or password incorrect" );
             request.getRequestDispatcher("pages/invalidLogin.jsp").forward(request, response);
 
-        }
+        }*/
 
 
     }

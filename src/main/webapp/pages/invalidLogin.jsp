@@ -7,7 +7,7 @@
       </head>
     <body>
 <p align="center" style="color:red"> <%=request.getAttribute("noSuchUser")%>
-        <form method="post" action="/cinema/login">
+        <form method="post" action="/login">
               <center>
               <table border="1" width="30%" cellpadding="3">
                   <thead>
