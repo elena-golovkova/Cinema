@@ -8,5 +8,18 @@
     <listener>
         <listener-class>com.cinema.controller.listener.ContextListener</listener-class>
     </listener>
+    <filter>
+        <filter-name>CharsetFilter</filter-name>
+        <filter-class>com.cinema.controller.filter.CharsetFilter</filter-class>
+        <init-param>
+            <param-name>requestEncoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>CharsetFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 
 </web-app>

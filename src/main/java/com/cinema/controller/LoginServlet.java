@@ -22,7 +22,7 @@ public class LoginServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse resp)
             throws ServletException, IOException {
 
-        request.getRequestDispatcher("pages/loginnew.jsp").forward(request, resp);
+        request.getRequestDispatcher("pages/login.jsp").forward(request, resp);
     }
 
 
@@ -30,37 +30,29 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Map<String, String> messages = new HashMap<String, String>();
         request.setAttribute("messages", messages);
-        UserDTO user = new UserDTO();
-
-
 
         String login = request.getParameter("login");
         if (login == null || login.trim().isEmpty()) {
-            messages.put("login", "Please enter login");
+            messages.put("login", "Login can not be empty");
+            request.getRequestDispatcher("/pages/login.jsp").forward(request, response);
         }
         String pass = request.getParameter("pass");
         if (pass == null || pass.trim().isEmpty()) {
-            messages.put("pass", "Please enter pass");
-        }
-        if (messages.isEmpty()) {
-            messages.put("success", "Form successfully submitted!");
+            messages.put("pass", "Password can not be empty");
+            request.getRequestDispatcher("/pages/login.jsp").forward(request, response);
         }
 
-        request.getRequestDispatcher("/pages/loginnew.jsp").forward(request, response);
-
-       /* UserService userService = UserServiceImpl.getInstance();
+        UserDTO user = new UserDTO();
+        UserService userService = UserServiceImpl.getInstance();
         user = userService.findUser(login, pass);
-        if (user != null) {
+        if (user == null) {
+            messages.put("find", "There is no user with such login and password");
+            request.getRequestDispatcher("/pages/login.jsp").forward(request, response);
+        } else {
             HttpSession session = request.getSession(true);
             session.setAttribute("user", user);
             response.sendRedirect("pages/userLogged.jsp"); //logged-in page
-        } else {
-
-            request.setAttribute("noSuchUser", "Login or password incorrect" );
-            request.getRequestDispatcher("pages/invalidLogin.jsp").forward(request, response);
-
-        }*/
-
+        }
 
     }
 
