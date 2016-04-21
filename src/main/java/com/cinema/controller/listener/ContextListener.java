@@ -21,7 +21,6 @@ public class ContextListener implements ServletContextListener {
     public void contextInitialized(ServletContextEvent sce) {
         String[] sqlList = null;
         String sql = null;
-        System.out.println("Context is initialised");
         String sqlFile = "db\\schema.sql";
 
         sql = getFileWithUtil(sqlFile);

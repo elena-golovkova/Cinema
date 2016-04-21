@@ -1,7 +1,6 @@
 package com.cinema.controller;
 
 
-import com.cinema.controller.listener.EmailValidator;
 import com.cinema.dto.UserDTO;
 import com.cinema.exception.UserLoginException;
 import com.cinema.model.Role;
@@ -22,6 +21,8 @@ import java.util.regex.Pattern;
 
 @WebServlet("/registration")
 public class RegServlet extends HttpServlet {
+
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
@@ -53,41 +54,45 @@ public class RegServlet extends HttpServlet {
             messages.put("pass", "Password can not be empty");
             request.getRequestDispatcher("/pages/reg.jsp").forward(request, response);
         }
+
         String email = request.getParameter("email");
-      /*  if (email != null || !email.trim().isEmpty()) {
-           if( !EmailValidator.validate(email)) {
-               messages.put("email", "Invalid email");
-               request.getRequestDispatcher("/pages/reg.jsp").forward(request, response);
-           }
-        }*/
-        String[] date = request.getParameter("date").split("-");
+        if (!(email != null && email.trim().isEmpty())) {
 
-        UserDTO user = new UserDTO();
-        user.setFirstName(firstName);
-        user.setLastName(lastName);
-        user.setEmail(email);
-        user.setLogin(login);
-        user.setPassword(pass);
-        user.setRole(Role.USER);
-        if (date.length == 3) {
-            int year = Integer.valueOf(date[0]);
-            int month = Integer.valueOf(date[1]);
-            int day = Integer.valueOf(date[2]);
-            user.setDate(year, month, day);
-
+            if (!EmailValidator.validate(email)) {
+                messages.put("email", "Enter a correct email");
+            }
         }
-        UserService userService = UserServiceImpl.getInstance();
-        try {
-            userService.createUser(user);
-            request.setAttribute("success", "You registered successfully. Please login");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/pages/reg.jsp");
-            request.getRequestDispatcher("/pages/login.jsp").forward(request, response);
-
-        } catch (UserLoginException e) {
-            messages.put("invalidLogin", "Login is already taken");
+        if (messages.size() != 0) {
             request.getRequestDispatcher("/pages/reg.jsp").forward(request, response);
-        }
+        } else {
+            String[] date = request.getParameter("date").split("-");
+            UserDTO user = new UserDTO();
+            user.setFirstName(firstName);
+            user.setLastName(lastName);
+            user.setEmail(email);
+            user.setLogin(login);
+            user.setPassword(pass);
+            user.setRole(Role.USER);
+            if (date.length == 3) {
+                int year = Integer.valueOf(date[0]);
+                int month = Integer.valueOf(date[1]);
+                int day = Integer.valueOf(date[2]);
+                user.setDate(year, month, day);
 
+            }
+            UserService userService = UserServiceImpl.getInstance();
+            try {
+                userService.createUser(user);
+                request.setAttribute("success", "You registered successfully. Please login");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/pages/reg.jsp");
+                request.getRequestDispatcher("/pages/login.jsp").forward(request, response);
+
+            } catch (UserLoginException e) {
+                messages.put("invalidLogin", "Login is already taken");
+                request.getRequestDispatcher("/pages/reg.jsp").forward(request, response);
+            }
+
+        }
     }
 
 }

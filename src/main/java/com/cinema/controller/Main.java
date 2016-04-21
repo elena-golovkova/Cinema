@@ -70,7 +70,7 @@ public class Main {
         System.out.println(hallService.getAll());
         System.out.println(ticketService.getAll());
 
-        */
+
 
        UserService userService = UserServiceImpl.getInstance();
 
@@ -91,11 +91,12 @@ public class Main {
             movieDTO.setDescription("Description" + Thread.currentThread().getName() + " №" + i);
             movieDTO.setDuration(1000000l + i);
             movieService.create(movieDTO);
-        }
+        }*/
 
-        String date = "1987-05-29";
-        System.out.println(date);
-        System.out.println(System.getProperty("java.class.path"));
+        String s = "chuprina.engmail.com";
+        boolean b = EmailValidator.validate(s);
+        System.out.println(b);
+
 
     }
 

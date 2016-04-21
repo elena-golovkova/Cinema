@@ -18,7 +18,7 @@ public class LogOutServlet extends HttpServlet {
         HttpSession session = request.getSession(true);
 
             session.invalidate();
-            request.getRequestDispatcher("pages/cinema.jsp").forward(request, resp);
+            request.getRequestDispatcher("pages/movie.jsp").forward(request, resp);
 
     }
 }
