@@ -27,9 +27,15 @@ public class SessionServlet extends HttpServlet {
 
         List<SessionDTO> sessions = new ArrayList<>();
         SessionService sessionService = SessionServiceImpl.getInstance();
-        sessions = sessionService.getALLSessionsForMovie(Integer.valueOf(id));
-        request.getSession().setAttribute("sessions", sessions);
-        request.getRequestDispatcher("pages/moviesession.jsp").forward(request, resp);
+        if(id != null){
+            sessions = sessionService.getALLSessionsForMovie(Integer.valueOf(id));
+            request.getSession().setAttribute("sessions", sessions);
+            request.getRequestDispatcher("pages/moviesession.jsp").forward(request, resp);
+        } else {
+            sessions = sessionService.getALLSessionsWithAllData();
+            request.getSession().setAttribute("sessions", sessions);
+            request.getRequestDispatcher("pages/moviesession.jsp").forward(request, resp);
+        }
 
     }
 

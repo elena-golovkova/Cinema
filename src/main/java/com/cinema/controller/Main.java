@@ -95,13 +95,27 @@ public class Main {
             movieDTO.setDescription("Description" + Thread.currentThread().getName() + " №" + i);
             movieDTO.setDuration(1000000l + i);
             movieService.create(movieDTO);
-        }*/
+        }
 
-        SessionService sessionService = SessionServiceImpl.getInstance();
+        /*SessionService sessionService = SessionServiceImpl.getInstance();
         List list = new LinkedList<>();
         list = sessionService.getALLSessionsForMovie(1);
-        System.out.println(list);
+        System.out.println(list);*/
+        MovieService movieService = MovieServiceImpl.getInstance();
+        HallService hallService = HallServiceImpl.getInstance();
 
+
+
+        SessionDTO session = new SessionDTO();
+        session.setDate(2026, 01, 01, 17, 06);
+        session.setMovie(Transformer.movieDTOTMovie(movieService.get(1)));
+        session.setHall(Transformer.hallDtoToHall(hallService.get(1)));
+
+
+        SessionService sessionService = SessionServiceImpl.getInstance();
+        sessionService.create(session);
+        SessionDTO sessionDTO = sessionService.get(1);
+        System.out.println(sessionDTO);
 
 
             }

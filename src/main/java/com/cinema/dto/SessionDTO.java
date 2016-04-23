@@ -6,13 +6,11 @@ import com.cinema.model.Ticket;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 public class SessionDTO {
     private Integer id;
-    private LocalDateTime date;
+    private Date date;
     private Hall hall;
     private Movie movie;
     private List<Ticket> tickets = new LinkedList<>();
@@ -25,16 +23,18 @@ public class SessionDTO {
         this.id = id;
     }
 
-    public LocalDateTime getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
     public void setDate(int year, int month, int day, int hour, int minute) {
-        this.date = LocalDateTime.of(year, month, day, hour, minute);
+        Calendar cal = Calendar.getInstance();
+        cal.set(year, month, day, hour, minute);
+        this.date = cal.getTime();
     }
 
     public Hall getHall() {
@@ -57,12 +57,12 @@ public class SessionDTO {
         return tickets;
     }
 
-    public void setTickets(List<Ticket> tickets){
+    public void setTickets(List<Ticket> tickets) {
 
         this.tickets = tickets;
     }
 
-    public SessionDTO(Integer id, LocalDateTime date, Hall hall, Movie movie, List<Ticket> tickets) {
+    public SessionDTO(Integer id, Date date, Hall hall, Movie movie, List<Ticket> tickets) {
         setId(id);
         setDate(date);
         setHall(hall);
@@ -70,7 +70,7 @@ public class SessionDTO {
         setTickets(tickets);
     }
 
-    public SessionDTO(Integer id, int year, int month, int day, int hour, int minute,  Hall hall, Movie movie, List<Ticket> tickets) {
+    public SessionDTO(Integer id, int year, int month, int day, int hour, int minute, Hall hall, Movie movie, List<Ticket> tickets) {
         setId(id);
         setDate(year, month, day, hour, minute);
         setHall(hall);

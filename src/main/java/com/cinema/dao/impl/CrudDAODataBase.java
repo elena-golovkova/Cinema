@@ -3,19 +3,15 @@ package com.cinema.dao.impl;
 import com.cinema.dao.api.Dao;
 import com.cinema.dao.api.UserDAO;
 import com.cinema.dao.storage.LocalDatePersistenceConverter;
-import com.cinema.dao.storage.LocalDateTimePersistenceConverter;
 import com.cinema.datasource.DataSource;
-import com.cinema.exception.UserLoginException;
 import com.cinema.model.*;
 
 import java.sql.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.lang.Integer;
 
 public abstract class CrudDAODataBase<T, Integer> implements Dao<T, Integer> {
 
@@ -30,7 +26,6 @@ public abstract class CrudDAODataBase<T, Integer> implements Dao<T, Integer> {
     private static Map<Object, String> stringMap = new HashMap<>();
     protected DataSource instance = DataSource.getInstance();
     LocalDatePersistenceConverter converter = new LocalDatePersistenceConverter();
-    LocalDateTimePersistenceConverter converterLocalDateToTimestamp = new LocalDateTimePersistenceConverter();
 
     private final String SELECT_ALL = "Select * from %s";
     private final String FIND_BY_ID = "Select * from %s where id = ?";
@@ -186,12 +181,12 @@ public abstract class CrudDAODataBase<T, Integer> implements Dao<T, Integer> {
                 break;
             case SESSION:
                 Session session = (Session) entity;
-                Timestamp dateSession = converterLocalDateToTimestamp.convertToDatabaseColumn(session.getDate());
+                //Timestamp dateSession = converterLocalDateToTimestamp.convertToDatabaseColumn(session.getDate());
                 java.lang.Integer movieId = session.getMovie() == null ? null : session.getMovie().getId();
                 java.lang.Integer hallId = session.getHall() == null ? null : session.getHall().getId();
                 sql = String.format(INSERT, stringMap.get(type), " (date, hall_id, movie_id) values (?,?,?)");
                 preparedStatement = connection.prepareStatement(sql);
-                preparedStatement.setTimestamp(1, dateSession);
+                preparedStatement.setTimestamp(1, new Timestamp(session.getDate().getTime()));
                 preparedStatement.setInt(2, hallId);
                 preparedStatement.setInt(3, movieId);
                 break;
@@ -247,13 +242,12 @@ public abstract class CrudDAODataBase<T, Integer> implements Dao<T, Integer> {
                 break;
             case SESSION:
                 Session session = (Session) entity;
-                Timestamp dateSession = converterLocalDateToTimestamp.convertToDatabaseColumn(session.getDate());
                 java.lang.Integer movieId = session.getMovie() == null ? null : session.getMovie().getId();
                 java.lang.Integer hallId = session.getHall() == null ? null : session.getHall().getId();
 
                 sql = String.format(UPDATE, stringMap.get(type), " date = ?, hall_id = ?, movie_id = ? where id = ?");
                 preparedStatement = connection.prepareStatement(sql);
-                preparedStatement.setTimestamp(1, dateSession);
+                preparedStatement.setTimestamp(1, new Timestamp(session.getDate().getTime()));
                 preparedStatement.setInt(2, hallId);
                 preparedStatement.setInt(3, movieId);
                 preparedStatement.setInt(4, session.getId());
@@ -261,6 +255,7 @@ public abstract class CrudDAODataBase<T, Integer> implements Dao<T, Integer> {
         }
         return preparedStatement;
     }
+
 
 
     private List<T> readAll(ResultSet resultSet) throws SQLException {
@@ -296,9 +291,8 @@ public abstract class CrudDAODataBase<T, Integer> implements Dao<T, Integer> {
 
     private Session createSession(ResultSet resultSet) throws SQLException {
         Session session = new Session();
-        LocalDateTime ld = converterLocalDateToTimestamp.convertToEntityAttribute(resultSet.getTimestamp("date"));
         session.setId(resultSet.getInt("id"));
-        session.setDate(ld);
+        session.setDate(resultSet.getTimestamp("date"));
         return session;
     }
 

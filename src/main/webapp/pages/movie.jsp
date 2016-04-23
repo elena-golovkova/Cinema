@@ -6,17 +6,26 @@
     <title>Movies</title>
 
 </head>
+<c:if test="${not empty sessionScope.user}">
+    <div align="right">
+        Hello <c:out value="${sessionScope.user.firstName} ${sessionScope.user.lastName}"></c:out>
+        <a href="/logout">Logout</a>
+    </div>
+    <hr/>
+</c:if>
 
 <c:if test="${not empty movies}">
-<c:forEach items="${sessionScope.movies}" var="movie">
-    <h2><c:out value="${movie.title}"></c:out></h2>
-    <p> Duration: <c:out value="${movie.duration}"></c:out> mins</p>
-    <p><c:out value="${movie.description}"></c:out></p>
+    <c:forEach items="${sessionScope.movies}" var="movie">
+        <h2><c:out value="${movie.title}"></c:out></h2>
 
-    <a href="/movie-sessions?id=${movie.id}">Show sessions</a>
-    <hr />
+        <p> Duration: <c:out value="${movie.duration}"></c:out> mins</p>
 
-</c:forEach>
+        <p><c:out value="${movie.description}"></c:out></p>
+
+        <a href="/movie-sessions?id=${movie.id}">Show sessions</a>
+        <hr/>
+
+    </c:forEach>
 </c:if>
 <c:if test="${empty movies}">
     <h2> No movie available</h2>

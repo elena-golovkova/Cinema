@@ -1,14 +1,13 @@
 package com.cinema.model;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 public class Session {
     private Integer id;
-    private LocalDateTime date;
+    private Date date;
     private Hall hall;
     private Movie movie;
     private List<Ticket> tickets = new LinkedList<>();
@@ -21,16 +20,18 @@ public class Session {
         this.id = id;
     }
 
-    public LocalDateTime getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
     public void setDate(int year, int month, int day, int hour, int minute) {
-        this.date = LocalDateTime.of(year, month, day, hour, minute);
+        Calendar cal = Calendar.getInstance();
+        cal.set(year, month, day, hour, minute);
+        this.date = cal.getTime();
     }
 
     public Hall getHall() {
@@ -53,12 +54,12 @@ public class Session {
         return tickets;
     }
 
-    public void setTickets(List<Ticket> tickets){
+    public void setTickets(List<Ticket> tickets) {
 
         this.tickets = tickets;
     }
 
-    public Session(Integer id, LocalDateTime date, Hall hall, Movie movie, List<Ticket> tickets) {
+    public Session(Integer id, Date date, Hall hall, Movie movie, List<Ticket> tickets) {
         setId(id);
         setDate(date);
         setHall(hall);
@@ -66,7 +67,7 @@ public class Session {
         setTickets(tickets);
     }
 
-    public Session(Integer id, int year, int month, int day, int hour, int minute,  Hall hall, Movie movie, List<Ticket> tickets) {
+    public Session(Integer id, int year, int month, int day, int hour, int minute, Hall hall, Movie movie, List<Ticket> tickets) {
         setId(id);
         setDate(year, month, day, hour, minute);
         setHall(hall);
@@ -77,15 +78,4 @@ public class Session {
     public Session() {
     }
 
-    public void addTicketToList(Ticket ticket){
-        tickets.add(ticket);
-    }
-
-    public void removeTicketFromList(Ticket ticket){
-        try {
-            tickets.remove(ticket);
-        } catch (NoSuchElementException e) {
-            e.printStackTrace();
-        }
-    }
 }

@@ -9,13 +9,22 @@
 
 </head>
 <body>
+<c:if test="${not empty sessionScope.user}">
+    <div align="right">
+        Hello <c:out value="${sessionScope.user.firstName} ${sessionScope.user.lastName}"></c:out>
+        <a href="/logout">Logout</a>
+        <hr/>
+    </div>
+</c:if>
+
+
 <h2><c:out value="${sessionScope.sessions[0].movie.title}"></c:out></h2>
 <c:if test="${not empty sessions}">
-<c:forEach items="${sessionScope.sessions}" var="session">
- <p><c:out value="${session.date}"></c:out>
-     hall: <c:out value="${session.hall.name}"></c:out></p>
+    <c:forEach items="${sessionScope.sessions}" var="session">
+        <p><fmt:formatDate value="${session.date}" type="both" dateStyle="short" timeStyle="short"/>
+            hall: <c:out value="${session.hall.name}"></c:out></p>
 
-</c:forEach>
+    </c:forEach>
 </c:if>
 <c:if test="${empty sessions}">
     <h2> No session available for this movie</h2>
