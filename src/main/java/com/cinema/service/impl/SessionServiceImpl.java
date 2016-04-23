@@ -110,4 +110,19 @@ public final class SessionServiceImpl implements SessionService {
         }
         return sessionDTOs;
     }
+
+    @Override
+    public List<SessionDTO> getALLSessionsForMovie(Integer id) {
+        List<SessionDTO> sessionDTOs = null;
+        if (isDB) {
+            SessionDAO sessionDAO = SessionDAODB.getInstance();
+            List<Session> sessions = sessionDAO.getALLSessionsForMovie(id);
+            sessionDTOs = Transformer.listSessionToListSessionDTO(sessions);
+        }else{
+            SessionDAO sessionDAO = SessionDAOImpl.getInstance();
+            List<Session> sessions = sessionDAO.getALLSessionsForMovie(id);
+            sessionDTOs = Transformer.listSessionToListSessionDTO(sessions);
+        }
+        return sessionDTOs;
+    }
 }

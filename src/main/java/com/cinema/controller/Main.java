@@ -11,6 +11,10 @@ import com.cinema.model.Role;
 import com.cinema.service.api.*;
 import com.cinema.service.impl.*;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -93,12 +97,14 @@ public class Main {
             movieService.create(movieDTO);
         }*/
 
-        String s = "chuprina.engmail.com";
-        boolean b = EmailValidator.validate(s);
-        System.out.println(b);
+        SessionService sessionService = SessionServiceImpl.getInstance();
+        List list = new LinkedList<>();
+        list = sessionService.getALLSessionsForMovie(1);
+        System.out.println(list);
 
 
-    }
+
+            }
 
 
 }

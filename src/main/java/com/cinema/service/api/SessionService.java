@@ -9,5 +9,6 @@ import java.util.List;
 
 public interface SessionService extends Service<SessionDTO, Integer> {
     public List<SessionDTO> getALLSessionsWithAllData();
+    public List<SessionDTO> getALLSessionsForMovie(Integer id);
 
 }

@@ -10,4 +10,5 @@ import java.util.List;
 
 public interface SessionDAO<Session, Integer> extends Dao<Session, Integer> {
     public List<Session> getALLSessionWithAllData();
+    public List<Session> getALLSessionsForMovie(Integer id);
 }

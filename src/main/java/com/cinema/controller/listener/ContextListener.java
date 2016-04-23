@@ -34,7 +34,7 @@ public class ContextListener implements ServletContextListener {
 
             for (String query : sqlList)
                 try {
-                    System.out.println(query);
+
                     PreparedStatement preparedStatement = connection.prepareStatement(query);
                     preparedStatement.executeUpdate();
                 } catch (SQLException e) {
