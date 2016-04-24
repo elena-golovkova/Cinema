@@ -1,6 +1,8 @@
 package com.cinema.dto;
 
-public class MovieDTO {
+import java.io.Serializable;
+
+public class MovieDTO  implements Serializable {
 
     private Integer id;
     private String title;

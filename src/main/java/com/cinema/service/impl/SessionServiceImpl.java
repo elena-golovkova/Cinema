@@ -6,6 +6,7 @@ import com.cinema.dao.impl.SessionDAODB;
 import com.cinema.dao.impl.SessionDAOImpl;
 import com.cinema.dao.storage.Configuration;
 import com.cinema.dto.SessionDTO;
+import com.cinema.exception.NoSessionException;
 import com.cinema.model.Session;
 import com.cinema.service.api.SessionService;
 
@@ -124,5 +125,20 @@ public final class SessionServiceImpl implements SessionService {
             sessionDTOs = Transformer.listSessionToListSessionDTO(sessions);
         }
         return sessionDTOs;
+    }
+
+    @Override
+    public SessionDTO getSessionWithData(Integer id) throws NoSessionException {
+        SessionDTO sessionDTO = null;
+        if (!isDB) {
+            SessionDAO sessionDAO = SessionDAOImpl.getInstance();
+            Session session = (Session) sessionDAO.getSessionWithData(id);
+            sessionDTO = Transformer.sessionToSessionDTO(session);
+        } else {
+            SessionDAO sessionDAO = SessionDAODB.getInstance();
+            Session session = (Session) sessionDAO.getSessionWithData(id);
+            sessionDTO = Transformer.sessionToSessionDTO(session);
+        }
+        return sessionDTO;
     }
 }

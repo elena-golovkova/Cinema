@@ -50,5 +50,10 @@ public final class SessionDAOImpl extends AbstractDAOInMemory<Session, Integer> 
         return listForMovie;
     }
 
+    @Override
+    public Session getSessionWithData(Integer id) {
+        return null;
+    }
+
 
 }

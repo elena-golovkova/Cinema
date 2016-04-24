@@ -17,14 +17,20 @@
     </div>
 </c:if>
 
-
-<h2><c:out value="${sessionScope.sessions[0].movie.title}"></c:out></h2>
 <c:if test="${not empty sessions}">
-    <c:forEach items="${sessionScope.sessions}" var="session">
-        <p><fmt:formatDate value="${session.date}" type="both" dateStyle="short" timeStyle="short"/>
-            hall: <c:out value="${session.hall.name}"></c:out></p>
+    <h2><c:out value="${sessionScope.sessions[0].movie.title}"></c:out></h2>
 
-    </c:forEach>
+    <form name="test" method="post" action="/tickets">
+
+        <c:forEach items="${sessionScope.sessions}" var="session">
+            <input type="radio" name="sessionid" value="${session.id}">
+            <fmt:formatDate value="${session.date}" type="both" dateStyle="short" timeStyle="short"/>,
+            <c:out value="${session.hall.name}"></c:out> hall<br/>
+        </c:forEach>
+
+        <p><input type="submit" value="Choose your tickets">
+    </form>
+
 </c:if>
 <c:if test="${empty sessions}">
     <h2> No session available for this movie</h2>

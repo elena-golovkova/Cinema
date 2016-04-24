@@ -1,8 +1,8 @@
 package com.cinema.dto;
 
-import com.cinema.model.User;
+import java.io.Serializable;
 
-public class TicketDTO {
+public class TicketDTO  implements Serializable {
     private Integer id;
     private int row;
     private int column;

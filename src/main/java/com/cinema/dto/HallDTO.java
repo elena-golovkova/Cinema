@@ -2,10 +2,11 @@ package com.cinema.dto;
 
 import com.cinema.model.Ticket;
 
+import java.io.Serializable;
 import java.util.List;
 
 
-public class HallDTO {
+public class HallDTO implements Serializable{
     private Integer id;
     private String name;
     private Integer rowCount;

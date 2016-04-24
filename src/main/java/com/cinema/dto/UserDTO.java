@@ -2,9 +2,10 @@ package com.cinema.dto;
 
 import com.cinema.model.Role;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class UserDTO {
+public class UserDTO  implements Serializable {
     private Integer id;
     private String firstName;
     private String lastName;

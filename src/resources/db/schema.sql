@@ -77,10 +77,10 @@ INSERT IGNORE INTO user (first_name, last_name, email, login, password, date, ro
 VALUES ('Petr', 'Petrov', 'petr@petr.com', 'petr', 'petr', '1999-04-04', 'USER');
 INSERT IGNORE INTO movie (title, description, duration) VALUES ('Suicide Squad',
                                                                 'A team of the world most dangerous, incarcerated super villains, are armed by the government and sent on a mission to defeat an enigmatic enemy. But they discover they werent picked to succeed but chosen for their culpability when the mission inevitably fails. Suicide Squad takes place several months after the events in Batman v Superman, and The Joker has already had many battles with Batman over the previous years.',
-                                                                7200000);
+                                                                146);
 INSERT IGNORE INTO movie (title, description, duration) VALUES ('The Jungle Book',
                                                                 'Directed by Jon Favreau (Iron Man), based on Rudyard Kiplings timeless stories and inspired by Disneys classic animated film, The Jungle Book is an all-new live-action epic adventure about Mowgli (newcomer Neel Sethi), a man-cub who’s been raised by a family of wolves. But Mowgli finds he is no longer welcome in the jungle when fearsome tiger Shere Khan (voice of Idris Elba), who bears the scars of Man, promises to eliminate what he sees as a threat. Urged to abandon the only home hes ever known, Mowgli embarks on a captivating journey of self-discovery, guided by panther-turned-stern mentor Bagheera (voice of Ben Kingsley), and the free-spirited bear Baloo (voice of Bill Murray).',
-                                                                6300000);
+                                                                120);
 INSERT IGNORE INTO hall (name, row_count, column_count) VALUES ('Red', 10, 10);
 INSERT IGNORE INTO hall (name, row_count, column_count) VALUES ('Green', 8, 8);
 INSERT IGNORE INTO `session` (date, movie_id, hall_id) VALUES ('2016-05-01 14:10', 1, 1);

@@ -4,11 +4,12 @@ import com.cinema.model.Hall;
 import com.cinema.model.Movie;
 import com.cinema.model.Ticket;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
-public class SessionDTO {
+public class SessionDTO  implements Serializable {
     private Integer id;
     private Date date;
     private Hall hall;
