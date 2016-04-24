@@ -1,15 +1,13 @@
 package com.cinema.dao.impl;
 
 import com.cinema.dao.api.TicketDAO;
-import com.cinema.model.Session;
+import com.cinema.exception.TicketPurchaseException;
 import com.cinema.model.Ticket;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -20,6 +18,7 @@ public class TicketDAODB extends CrudDAODataBase<Ticket, Integer> implements Tic
             "join ticket on session.id = ticket.session_id where session.id = ?";
     private static final String PURCHASE = "Insert into ticket (row, place, session_id) values (?,?,?)";
     private static final String RETURN = "Delete from ticket where id = ?";
+    private  static final String FIND_TICKET = "select * from ticket where row = ? and place = ? and session_id = ?";
 
     public synchronized static TicketDAODB getInstance() {
 
@@ -34,8 +33,8 @@ public class TicketDAODB extends CrudDAODataBase<Ticket, Integer> implements Tic
     }
 
     @Override
-    public void purchaseTicket(int row, int column, int sessionId) {
-
+    public void purchaseTicket(int row, int column, int sessionId) throws TicketPurchaseException {
+        checkTicket(row, column, sessionId);
         Connection connection = instance.getConnection();
         PreparedStatement preparedStatement = null;
         try {
@@ -68,7 +67,7 @@ public class TicketDAODB extends CrudDAODataBase<Ticket, Integer> implements Tic
     }
 
     @Override
-    public List<Ticket> getAllSoldTicketFromSession(Integer sessionId) {
+    public List<Ticket> getAllSoldTicketsFromSession(Integer sessionId) {
         List<Ticket> tickets = new LinkedList<>();
         Connection connection = instance.getConnection();
         PreparedStatement preparedStatement = null;
@@ -90,4 +89,31 @@ public class TicketDAODB extends CrudDAODataBase<Ticket, Integer> implements Tic
         return tickets;
 
     }
+
+    @Override
+    public void checkTicket(int row, int column, int sessionId) throws TicketPurchaseException {
+        Connection connection = instance.getConnection();
+        PreparedStatement preparedStatement = null;
+        Ticket ticket = null;
+
+        try {
+            preparedStatement = connection.prepareStatement(FIND_TICKET);
+            preparedStatement.setInt(1, row);
+            preparedStatement.setInt(2, column);
+            preparedStatement.setInt(3, sessionId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                ticket = new Ticket();
+                ticket.setId(resultSet.getInt("id"));
+                ticket.setRow(resultSet.getInt("row"));
+                ticket.setColumn(resultSet.getInt("place"));
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        if (ticket != null) throw new TicketPurchaseException();
+
+    }
+
 }

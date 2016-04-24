@@ -1,11 +1,12 @@
 package com.cinema.model;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Session {
+public class Session implements Serializable {
     private Integer id;
     private Date date;
     private Hall hall;

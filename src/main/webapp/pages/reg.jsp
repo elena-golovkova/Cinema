@@ -5,7 +5,7 @@
   <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
           <title>Registration</title>
-  <link rel="stylesheet" href="<%=request.getContextPath()%>/css/colour.css"/>
+  <link rel="stylesheet" href="<%=request.getContextPath()%>/css/color.css"/>
       </head>
     <body>
         <form method="post" action="${pageContext.request.contextPath}/registration">

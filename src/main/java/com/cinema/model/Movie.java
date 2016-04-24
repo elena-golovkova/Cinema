@@ -1,6 +1,8 @@
 package com.cinema.model;
 
-public class Movie {
+import java.io.Serializable;
+
+public class Movie implements Serializable{
     private Integer id;
     private String title;
     private String description;

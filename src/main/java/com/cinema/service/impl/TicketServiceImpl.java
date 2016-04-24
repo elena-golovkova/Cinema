@@ -6,6 +6,7 @@ import com.cinema.dao.impl.TicketDAODB;
 import com.cinema.dao.impl.TicketDAOImpl;
 import com.cinema.dao.storage.Configuration;
 import com.cinema.dto.TicketDTO;
+import com.cinema.exception.TicketPurchaseException;
 import com.cinema.model.Ticket;
 import com.cinema.service.api.TicketService;
 
@@ -27,7 +28,7 @@ public final class TicketServiceImpl implements TicketService {
     }
 
     @Override
-    public void purchaseTicket(int row, int column, int sessionId) {
+    public void purchaseTicket(int row, int column, int sessionId) throws TicketPurchaseException {
 
         if (!isDB) {
             TicketDAO<Ticket, Integer> ticketDAO = TicketDAOImpl.getInstance();
@@ -58,10 +59,22 @@ public final class TicketServiceImpl implements TicketService {
         List<TicketDTO> ticketDTOs = new LinkedList<>();
         if (isDB) {
             TicketDAO<Ticket, Integer> ticketDAO = TicketDAODB.getInstance();
-            List<Ticket> tickets = ticketDAO.getAllSoldTicketFromSession(id);
+            List<Ticket> tickets = ticketDAO.getAllSoldTicketsFromSession(id);
             ticketDTOs = Transformer.listSeatsToListSeatsDTO(tickets);
         }
         return ticketDTOs;
+    }
+
+    @Override
+    public void checkTicket(int row, int column, int sessionId) throws TicketPurchaseException {
+        if (!isDB) {
+            TicketDAO<Ticket, Integer> ticketDAO = TicketDAOImpl.getInstance();
+            ticketDAO.checkTicket(row, column, sessionId);
+
+        } else {
+            TicketDAO<Ticket, Integer> ticketDAO = TicketDAODB.getInstance();
+            ticketDAO.checkTicket(row, column, sessionId);
+        }
     }
 
     @Override

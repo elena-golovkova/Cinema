@@ -1,8 +1,9 @@
 package com.cinema.model;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Hall {
+public class Hall implements Serializable{
     private Integer id;
     private String name;
     private Integer rowCount;

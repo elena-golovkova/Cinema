@@ -1,7 +1,9 @@
 package com.cinema.model;
 
 
-public class Ticket {
+import java.io.Serializable;
+
+public class Ticket implements Serializable {
     private Integer id;
     private Integer row;
     private Integer column;

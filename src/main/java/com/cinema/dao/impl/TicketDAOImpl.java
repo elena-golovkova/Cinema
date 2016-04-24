@@ -2,6 +2,7 @@ package com.cinema.dao.impl;
 
 import com.cinema.dao.api.TicketDAO;
 import com.cinema.dao.storage.InMemoryDB;
+import com.cinema.exception.TicketPurchaseException;
 import com.cinema.model.Ticket;
 
 import java.util.List;
@@ -35,9 +36,14 @@ public final class TicketDAOImpl extends AbstractDAOInMemory<Ticket, Integer> im
     }
 
     @Override
-    public List<Ticket> getAllSoldTicketFromSession(Integer id) {
+    public List<Ticket> getAllSoldTicketsFromSession(Integer id) {
         //for DB
         return null;
+    }
+
+    @Override
+    public void checkTicket(int row, int column, int sessionId) throws TicketPurchaseException {
+
     }
 
 

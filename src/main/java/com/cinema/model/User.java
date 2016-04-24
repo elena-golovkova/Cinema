@@ -1,8 +1,9 @@
 package com.cinema.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class User {
+public class User implements Serializable {
 
     private Integer id;
     private String firstName;

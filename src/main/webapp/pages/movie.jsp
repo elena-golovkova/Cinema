@@ -3,6 +3,7 @@
 <head>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/color.css"/>
     <title>Movies</title>
 
 </head>
@@ -13,7 +14,10 @@
     </div>
     <hr/>
 </c:if>
-
+<c:if test="${not empty messages}">
+<h2 class="success">${messages.wrongpage}</h2>
+<h2 class="success">${messages.success}</h2>
+</c:if>
 <c:if test="${not empty movies}">
     <c:forEach items="${sessionScope.movies}" var="movie">
         <h2><c:out value="${movie.title}"></c:out></h2>

@@ -65,6 +65,7 @@ CREATE TABLE IF NOT EXISTS `ticket` (
   `session_id` INT UNSIGNED          DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`),
+  UNIQUE INDEX `ticket_INDEX` (`row`, `place`, `session_id` ASC),
   CONSTRAINT `fk_ticket_1` FOREIGN KEY (`session_id`)
   REFERENCES `session` (`id`)
     ON UPDATE CASCADE
