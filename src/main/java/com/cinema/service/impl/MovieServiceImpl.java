@@ -6,6 +6,7 @@ import com.cinema.dao.impl.MovieDAODB;
 import com.cinema.dao.impl.MovieDAOImpl;
 import com.cinema.dao.storage.Configuration;
 import com.cinema.dto.MovieDTO;
+import com.cinema.exception.MovieExistException;
 import com.cinema.model.Movie;
 import com.cinema.service.api.MovieService;
 
@@ -96,6 +97,17 @@ public final class MovieServiceImpl implements MovieService {
         }else {
             MovieDAO movieDAO = MovieDAODB.getInstance();
             movieDAO.delete(id);
+        }
+    }
+
+    @Override
+    public void checkMovie(String title) throws MovieExistException {
+        if (!isDB) {
+            MovieDAO movieDAO = MovieDAOImpl.getInstance();
+            movieDAO.checkMovie(title);
+        }else {
+            MovieDAO movieDAO = MovieDAODB.getInstance();
+            movieDAO.checkMovie(title);
         }
     }
 }

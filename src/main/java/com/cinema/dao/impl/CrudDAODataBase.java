@@ -27,7 +27,7 @@ public abstract class CrudDAODataBase<T, Integer> implements Dao<T, Integer> {
     protected DataSource instance = DataSource.getInstance();
     LocalDatePersistenceConverter converter = new LocalDatePersistenceConverter();
 
-    private final String SELECT_ALL = "Select * from %s";
+    private final String SELECT_ALL = "Select * from %s order by id desc";
     private final String FIND_BY_ID = "Select * from %s where id = ?";
     private final String INSERT = "Insert into %s %s";
     private final String DELETE = "Delete from %s where id = ?";

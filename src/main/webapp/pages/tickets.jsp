@@ -6,6 +6,9 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Tickets</title>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/color.css"/>
+    <style type="text/css">
+       label.ex {color:darkgrey;}
+    </style>
 
 </head>
 <c:if test="${not empty sessionScope.user}">
@@ -41,7 +44,7 @@
                             <c:choose>
                                 <c:when test="${flag == 1}">
                                     <td><input id="checkboxiddis" type="checkbox" name="ticket${i}${j}" disabled/>
-                                    <label for="checkboxiddis">row <c:out value="${i}"/> place <c:out
+                                    <label class = "ex" for="checkboxiddis">row <c:out value="${i}"/> place <c:out
                                             value="${j}"></c:out> </label>
                                     <c:set var="flag" value="0"/>
                                 </c:when>
@@ -65,9 +68,6 @@
     </form>
 
 </c:if>
-<c:forEach items="${sessionScope.purchasedTickets}" var="ticket">
-    <c:out value="${ticket}"></c:out>
-</c:forEach>
 <c:if test="${empty session}">
     <h2> There is no such session</h2>
 </c:if>

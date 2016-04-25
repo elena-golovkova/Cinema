@@ -41,6 +41,7 @@
   <span class="error">${messages.login}</span>
   <span class="error">${messages.pass}</span>
   <span class="error">${messages.find}</span>
+  <span class="error">${wrongaccess}</span>
   <span class="success"><c:out value="${success}"></c:out></span>
 
               </center>

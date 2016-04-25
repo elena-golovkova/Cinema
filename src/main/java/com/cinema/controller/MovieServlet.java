@@ -2,6 +2,7 @@ package com.cinema.controller;
 
 
 import com.cinema.dto.MovieDTO;
+import com.cinema.dto.UserDTO;
 import com.cinema.service.api.MovieService;
 import com.cinema.service.impl.MovieServiceImpl;
 
@@ -18,15 +19,21 @@ import java.util.List;
 public class MovieServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         List<MovieDTO> movies = new ArrayList<>();
         MovieService movieService = MovieServiceImpl.getInstance();
         movies = movieService.getAll();
-        req.getSession().setAttribute("movies", movies);
-        req.getRequestDispatcher("pages/movie.jsp").forward(req, resp);
+        request.getSession().setAttribute("movies", movies);
+        UserDTO user = (UserDTO) request.getSession().getAttribute("user");
 
+        if (user.getRole().toString().equals("ADMIN")) {
+            request.getRequestDispatcher("/pages/editMovie.jsp").forward(request, response);
+        } else request.getRequestDispatcher("pages/movie.jsp").forward(request, response);
     }
 
 }
+
+
+

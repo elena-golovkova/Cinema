@@ -1,6 +1,7 @@
 package com.cinema.dao.impl;
 
 import com.cinema.dao.api.MovieDAO;
+import com.cinema.exception.MovieExistException;
 import com.cinema.model.Movie;
 
 public class MovieDAOImpl extends AbstractDAOInMemory<Movie, Integer> implements MovieDAO<Movie, Integer> {
@@ -17,5 +18,10 @@ public class MovieDAOImpl extends AbstractDAOInMemory<Movie, Integer> implements
     }
     private MovieDAOImpl(Class type) {
         super(type);
+    }
+
+    @Override
+    public void checkMovie(String title) throws MovieExistException {
+
     }
 }
