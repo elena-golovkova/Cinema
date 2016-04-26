@@ -26,9 +26,10 @@ public class MovieServlet extends HttpServlet {
         MovieService movieService = MovieServiceImpl.getInstance();
         movies = movieService.getAll();
         request.getSession().setAttribute("movies", movies);
-        UserDTO user = (UserDTO) request.getSession().getAttribute("user");
+        UserDTO user = null;
+        user = (UserDTO) request.getSession().getAttribute("user");
 
-        if (user.getRole().toString().equals("ADMIN")) {
+        if (user != null && user.getRole().toString().equals("ADMIN")) {
             request.getRequestDispatcher("/pages/editMovie.jsp").forward(request, response);
         } else request.getRequestDispatcher("pages/movie.jsp").forward(request, response);
     }

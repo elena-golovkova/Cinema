@@ -23,9 +23,10 @@
     <form name="test" method="post" action="/tickets">
 
         <c:forEach items="${sessionScope.sessions}" var="session">
-            <input type="radio" name="sessionid" value="${session.id}">
-            <fmt:formatDate value="${session.date}" type="both" dateStyle="short" timeStyle="short"/>,
-            <c:out value="${session.hall.name}"></c:out> hall<br/>
+            <input id="${session.id}" type="radio" name="sessionid" value="${session.id}">
+            <label for="${session.id}"> <fmt:formatDate value="${session.date}" type="both" dateStyle="short"
+                                                        timeStyle="short"/>,
+                <c:out value="${session.hall.name}"></c:out> hall</label><br/>
         </c:forEach>
 
         <p><input type="submit" value="Choose your tickets">
@@ -35,7 +36,7 @@
 <c:if test="${empty sessions}">
     <h2> No session available for this movie</h2>
     <br/>
-    <a href="/movie">Please choose another one</a></td>
+    <a href="/movie">Please choose another movie</a></td>
 </c:if>
 </body>
 </html>

@@ -43,8 +43,7 @@ public class DataSource {
                 pooledConnection.setDriverClass(configuration.getProperty(Configuration.DRIVER_CLASS));
                 pooledConnection.setJdbcUrl(configuration.getProperty(Configuration.JDBC_URL));
                 pooledConnection.setUser(configuration.getProperty(Configuration.LOGIN));
-                pooledConnection.setPassword(configuration.getProperty(Configuration.PASSWORD));
-                pooledConnection.setMinPoolSize(5);
+                pooledConnection.setPassword(configuration.getProperty(Configuration.PASSWORD));               ;
                 pooledConnection.setAcquireIncrement(1);
                 pooledConnection.setMaxPoolSize(100);
                 pooledConnection.setMinPoolSize(1);

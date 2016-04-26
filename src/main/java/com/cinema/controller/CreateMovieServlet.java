@@ -23,13 +23,13 @@ public class CreateMovieServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        UserDTO user = (UserDTO) request.getSession().getAttribute("user");
+        UserDTO user = null;
+        user = (UserDTO) request.getSession().getAttribute("user");
 
-        if (user.getRole().toString().equals("ADMIN")) {
+        if (user != null && user.getRole().toString().equals("ADMIN")) {
             request.getRequestDispatcher("/pages/createMovie.jsp").forward(request, response);
         } else {
             response.sendError(404);
-            //request.getRequestDispatcher("pages/movie.jsp").forward(request, response);
         }
     }
 

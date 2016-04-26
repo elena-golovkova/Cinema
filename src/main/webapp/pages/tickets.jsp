@@ -43,14 +43,14 @@
                         </c:forEach>
                             <c:choose>
                                 <c:when test="${flag == 1}">
-                                    <td><input id="checkboxiddis" type="checkbox" name="ticket${i}${j}" disabled/>
-                                    <label class = "ex" for="checkboxiddis">row <c:out value="${i}"/> place <c:out
+                                    <td><input id="ticket${i}${j}" type="checkbox" name="ticket${i}${j}" disabled/>
+                                    <label class = "ex" for="ticket${i}${j}">row <c:out value="${i}"/> place <c:out
                                             value="${j}"></c:out> </label>
                                     <c:set var="flag" value="0"/>
                                 </c:when>
                                 <c:otherwise>
-                                    <td><input id="checkboxid" type="checkbox" name="ticket${i}${j}"/>
-                                        <label for="checkboxid" >row <c:out value="${i}"/> place <c:out
+                                    <td><input id="ticket${i}${j}" type="checkbox" name="ticket${i}${j}"/>
+                                        <label for="ticket${i}${j}" >row <c:out value="${i}"/> place <c:out
                                                 value="${j}"></c:out> </label>
                                     </td>
                                 </c:otherwise>

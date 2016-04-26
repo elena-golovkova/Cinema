@@ -15,7 +15,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @WebServlet("/movie-sessions")
 public class SessionServlet extends HttpServlet {
@@ -23,18 +25,19 @@ public class SessionServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse resp)
             throws ServletException, IOException {
+        Map<String, String> messages = new HashMap<String, String>();
+        request.setAttribute("messages", messages);
         String id = request.getParameter("id");
 
         List<SessionDTO> sessions = new ArrayList<>();
         SessionService sessionService = SessionServiceImpl.getInstance();
-        if(id != null){
+        if (id != null) {
             sessions = sessionService.getALLSessionsForMovie(Integer.valueOf(id));
             request.getSession().setAttribute("sessions", sessions);
             request.getRequestDispatcher("pages/moviesession.jsp").forward(request, resp);
         } else {
-            sessions = sessionService.getALLSessionsWithAllData();
-            request.getSession().setAttribute("sessions", sessions);
-            request.getRequestDispatcher("pages/moviesession.jsp").forward(request, resp);
+            messages.put("wrongpage", "Please select movie first");
+            request.getRequestDispatcher("/movie").forward(request, resp);
         }
 
     }
