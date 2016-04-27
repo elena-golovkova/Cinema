@@ -11,7 +11,7 @@ import java.sql.SQLException;
 
 public class MovieDAODB extends CrudDAODataBase<Movie, Integer> implements MovieDAO<Movie, Integer> {
     private static MovieDAODB movieDAO;
-    private static final String SELECT_MOVIE_BY_TITLE = "select * from movie where title = ?";
+    private static final String SELECT_MOVIE = "select * from movie where ? = ?";
 
     public synchronized static MovieDAODB getInstance() {
 
@@ -27,13 +27,14 @@ public class MovieDAODB extends CrudDAODataBase<Movie, Integer> implements Movie
     }
 
     @Override
-    public void checkMovie(String title) throws MovieExistException {
+    public void checkMovie(String column, String param) throws MovieExistException {
         Movie movie = null;
         Connection connection = instance.getConnection();
         PreparedStatement preparedStatement = null;
         try {
-            preparedStatement = connection.prepareStatement(SELECT_MOVIE_BY_TITLE);
-            preparedStatement.setString(1, title);
+            preparedStatement = connection.prepareStatement(SELECT_MOVIE);
+            preparedStatement.setString(1, column);
+            preparedStatement.setString(2, param);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 movie = new Movie();

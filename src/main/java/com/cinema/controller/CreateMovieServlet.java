@@ -61,7 +61,7 @@ public class CreateMovieServlet extends HttpServlet {
         }
         MovieService movieService = MovieServiceImpl.getInstance();
         try {
-            movieService.checkMovie(title);
+            movieService.checkMovie("title", title);
         } catch (MovieExistException e) {
             messages.put("movieExist", "Such film is already created");
         }
@@ -73,9 +73,7 @@ public class CreateMovieServlet extends HttpServlet {
             movie.setDuration(Long.valueOf(duration));
             movie.setDescription(description);
             movieService.create(movie);
-            request.removeAttribute("title");
-            request.removeAttribute("duration");
-            request.removeAttribute("description");
+            messages.put("createsuccess", "Movie was created successfully");
             response.sendRedirect("/movie");
 
         }

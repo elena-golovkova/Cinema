@@ -21,7 +21,7 @@ public class MovieDAOImpl extends AbstractDAOInMemory<Movie, Integer> implements
     }
 
     @Override
-    public void checkMovie(String title) throws MovieExistException {
+    public void checkMovie(String column, String param) throws MovieExistException {
 
     }
 }

@@ -10,6 +10,7 @@ import com.cinema.service.impl.TicketServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -75,6 +76,7 @@ public class PurchaseServlet extends HttpServlet {
                 for (List<Integer> integers : ticketsList) {
                     try {
                         ticketService.purchaseTicket(integers.get(0), integers.get(1), integers.get(2));
+
                     } catch (TicketPurchaseException e) {
                         messages.put("errorticket", "The ticket that you have chosen has already purchased. Please choose another one");
                         request.getRequestDispatcher("/pages/tickets.jsp").forward(request, response);

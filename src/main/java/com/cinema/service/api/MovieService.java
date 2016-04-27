@@ -6,5 +6,5 @@ import com.cinema.model.Movie;
 import java.util.List;
 
 public interface MovieService extends Service<MovieDTO, Integer> {
-    void checkMovie(String title) throws MovieExistException;
+    void checkMovie(String column, String param) throws MovieExistException;
 }
