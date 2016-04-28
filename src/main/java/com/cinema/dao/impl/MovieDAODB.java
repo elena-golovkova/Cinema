@@ -11,7 +11,8 @@ import java.sql.SQLException;
 
 public class MovieDAODB extends CrudDAODataBase<Movie, Integer> implements MovieDAO<Movie, Integer> {
     private static MovieDAODB movieDAO;
-    private static final String SELECT_MOVIE = "select * from movie where ? = ?";
+    private static final String SELECT_MOVIE = "select * from movie where title = ?";
+    private static final String SELECT_MOVIE_BY_ID = "select * from movie where id = ?";
 
     public synchronized static MovieDAODB getInstance() {
 
@@ -27,14 +28,13 @@ public class MovieDAODB extends CrudDAODataBase<Movie, Integer> implements Movie
     }
 
     @Override
-    public void checkMovie(String column, String param) throws MovieExistException {
+    public void checkMovie(String title) throws MovieExistException {
         Movie movie = null;
         Connection connection = instance.getConnection();
         PreparedStatement preparedStatement = null;
         try {
             preparedStatement = connection.prepareStatement(SELECT_MOVIE);
-            preparedStatement.setString(1, column);
-            preparedStatement.setString(2, param);
+            preparedStatement.setString(1, title);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 movie = new Movie();
@@ -42,11 +42,34 @@ public class MovieDAODB extends CrudDAODataBase<Movie, Integer> implements Movie
                 movie.setTitle(resultSet.getString("title"));
                 movie.setDescription(resultSet.getString("description"));
                 movie.setDuration(resultSet.getLong("duration"));
-                            }
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-       if (movie != null) throw new MovieExistException();
+        if (movie != null) throw new MovieExistException();
+    }
+
+    @Override
+    public void checkMovieIfNotExist(Integer id) throws MovieExistException {
+        Movie movie = null;
+        Connection connection = instance.getConnection();
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = connection.prepareStatement(SELECT_MOVIE_BY_ID);
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                movie = new Movie();
+                movie.setId(resultSet.getInt("id"));
+                movie.setTitle(resultSet.getString("title"));
+                movie.setDescription(resultSet.getString("description"));
+                movie.setDuration(resultSet.getLong("duration"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        if (movie == null) throw new MovieExistException();
     }
 }

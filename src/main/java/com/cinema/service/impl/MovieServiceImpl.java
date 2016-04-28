@@ -101,13 +101,24 @@ public final class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public void checkMovie(String column, String param) throws MovieExistException {
+    public void checkMovie(String title) throws MovieExistException {
         if (!isDB) {
             MovieDAO movieDAO = MovieDAOImpl.getInstance();
-            movieDAO.checkMovie(column, param);
+            movieDAO.checkMovie(title);
         }else {
             MovieDAO movieDAO = MovieDAODB.getInstance();
-            movieDAO.checkMovie(column, param);
+            movieDAO.checkMovie(title);
+        }
+    }
+
+    @Override
+    public void checkMovieIfNotExist(Integer id) throws MovieExistException {
+        if (!isDB) {
+            MovieDAO movieDAO = MovieDAOImpl.getInstance();
+            movieDAO.checkMovieIfNotExist(id);
+        }else {
+            MovieDAO movieDAO = MovieDAODB.getInstance();
+            movieDAO.checkMovieIfNotExist(id);
         }
     }
 }

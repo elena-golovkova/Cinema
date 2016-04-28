@@ -13,7 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @WebServlet("/movie")
 public class MovieServlet extends HttpServlet {
@@ -34,6 +36,19 @@ public class MovieServlet extends HttpServlet {
         } else request.getRequestDispatcher("pages/movie.jsp").forward(request, response);
     }
 
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        List<MovieDTO> movies = new ArrayList<>();
+        MovieService movieService = MovieServiceImpl.getInstance();
+        movies = movieService.getAll();
+        request.getSession().setAttribute("movies", movies);
+        UserDTO user = null;
+        user = (UserDTO) request.getSession().getAttribute("user");
+
+        if (user != null && user.getRole().toString().equals("ADMIN")) {
+            request.getRequestDispatcher("/pages/editMovie.jsp").forward(request, response);
+        } else request.getRequestDispatcher("pages/movie.jsp").forward(request, response);
+    }
 }
 
 

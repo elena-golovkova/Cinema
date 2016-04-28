@@ -61,7 +61,7 @@ public class CreateMovieServlet extends HttpServlet {
         }
         MovieService movieService = MovieServiceImpl.getInstance();
         try {
-            movieService.checkMovie("title", title);
+            movieService.checkMovie(title);
         } catch (MovieExistException e) {
             messages.put("movieExist", "Such film is already created");
         }

@@ -14,8 +14,8 @@ import java.util.List;
 
 public class TicketDAODB extends CrudDAODataBase<Ticket, Integer> implements TicketDAO<Ticket, Integer> {
     private static TicketDAODB ticketDAO;
-    private static final String SELECT_ALL_SOLD_TICKET = "select * from session \n" +
-            "join ticket on session.id = ticket.session_id where session.id = ?";
+    private static final String SELECT_ALL_SOLD_TICKET = "select * from ticket \n" +
+            "join session on session.id = ticket.session_id where session.id = ?";
     private static final String PURCHASE = "Insert into ticket (row, place, session_id) values (?,?,?)";
     private static final String RETURN = "Delete from ticket where id = ?";
     private  static final String FIND_TICKET = "select * from ticket where row = ? and place = ? and session_id = ?";
@@ -77,9 +77,9 @@ public class TicketDAODB extends CrudDAODataBase<Ticket, Integer> implements Tic
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 Ticket ticket = new Ticket();
-                ticket.setId(resultSet.getInt("id"));
-                ticket.setRow(resultSet.getInt("row"));
-                ticket.setColumn(resultSet.getInt("place"));
+                ticket.setId(resultSet.getInt(1)); //id
+                ticket.setRow(resultSet.getInt(2)); //row
+                ticket.setColumn(resultSet.getInt(3)); // place
                 tickets.add(ticket);
 
             }

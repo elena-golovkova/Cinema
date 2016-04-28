@@ -22,6 +22,9 @@
 <c:if test="${not empty movies}">
     <span class="error">${messages.wrongId}</span>
     <span class="error">${messages.wrongpage}</span>
+    <span class="success">${messages.wrongpage}</span>
+    <span class="success">${messages.createSession}</span>
+    <span class="success">${sessionDelete}</span><br/>
     <table border="1" cellpadding="3">
         <c:forEach items="${sessionScope.movies}" var="movie">
 
