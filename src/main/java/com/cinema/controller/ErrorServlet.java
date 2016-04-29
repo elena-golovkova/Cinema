@@ -12,16 +12,16 @@ public class ErrorServlet extends HttpServlet{
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        // Analyze the servlet exception
+
         Exception exception = (Exception)req.getAttribute("javax.servlet.error.exception");
         Integer statusCode = (Integer)req.getAttribute("javax.servlet.error.status_code");
         String servletName = (String)req.getAttribute("javax.servlet.error.servlet_name");
         String requestUri = (String)req.getAttribute("javax.servlet.error.request_uri");
 
-        // Set response content type
+
         resp.setContentType("text/html");
 
-        // print the output
+
         PrintWriter out = resp.getWriter();
         out.write("<html><head><title>Error</title></head><body>");
         if (statusCode != 500){
@@ -42,28 +42,4 @@ public class ErrorServlet extends HttpServlet{
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doGet(req, resp);
     }
-
 }
-/*<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
- xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
- http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" version="3.1">
-
- <!-- define global error handler -->
- <error-page>
- <location>/error-handler</location>
- </error-page>
-
- <!-- define specific error code handler -->
- <error-page>
- <error-code>404</error-code>
- <location>/error-handler</location>
- </error-page>
-
- <!-- define specific error exception handler -->
- <error-page>
- <exception-type>java.lang.UnsupportedOperationException</exception-type>
- <location>/error-handler</location>
- </error-page>
-
- </web-app>*/
